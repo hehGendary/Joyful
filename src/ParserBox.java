@@ -1,12 +1,13 @@
 import AST.Expression;
+import AST.Statement;
 
 import java.util.List;
 
 public class ParserBox {
-    public List<Expression> ast;
+    public Statement ast;
     public JoyfulError jfError;
 
-    public ParserBox(List<Expression> ast, JoyfulError jfError) {
+    public ParserBox(Statement ast, JoyfulError jfError) {
         this.ast = ast;
         this.jfError = jfError;
     }

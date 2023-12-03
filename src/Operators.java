@@ -1,5 +1,5 @@
 public class Operators {
-    public final String operators = "+-*/()<>";
+    public final String operators = "+-*/()<>=";
 
     public boolean inParens(char character) {
         return "()[]{}".indexOf(character) != -1;

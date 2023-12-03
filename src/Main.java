@@ -1,5 +1,6 @@
 
 import AST.Expression;
+import AST.Statement;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -65,10 +66,10 @@ public class Main {
                     }
                     ParserBox parserBox = new Parser(tokens, lexerBox.jfError).parse();
                     if (!parserBox.jfError.haveError) {
-                        List<Expression> AST = parserBox.ast;
-                        for (Expression ex : AST) {
-                            System.out.println(ex.toString() + "=" + ex.eval());
-                        }
+                        Statement AST = parserBox.ast;
+                        AST.execute();
+                    } else {
+                        System.out.println(parserBox.jfError.errorDetails);
                     }
                 } else {
                     System.out.println(lexerBox.jfError.errorDetails);

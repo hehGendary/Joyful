@@ -1,9 +1,5 @@
-import AST.BinaryExpression;
-import AST.Expression;
-import AST.NumberExpression;
-import AST.UnaryExpression;
+import AST.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class Parser {
@@ -23,25 +19,45 @@ public final class Parser {
     }
 
     public ParserBox parse() {
-        final List<Expression> result = new ArrayList<>();
+        final BlockStatement result = new BlockStatement();
         while (!match("EOF") && !jfError.haveError) {
-            result.add(expression());
+            result.add(getStatement());
         }
         return new ParserBox(result, jfError);
     }
 
-    private Expression expression() {
+    private Statement getStatement() {
+        if (match("print")) {
+            if (!match("LPAR")) jfError.addError("Unknown token " + get(0).toString());
+            Expression printExpr = getExpr();
+            if (!match("RPAR")) jfError.addError("Unknown token" + get(0).toString());
+            return new PrintStatement(printExpr);
+        }
+        return makeStatement();
+    }
+
+    private Statement makeStatement() {
+        if (match("WORD")) {
+            String varName = get(-1).text;
+            if (!match("MAKEEQUALS")) jfError.addError("Unkniwn syntax!");
+            return new makeVariableStatement(varName, getExpr());
+        }
+        jfError.addError("Unknown statement!++");
+        return new BlockStatement();
+    }
+
+    private Expression getExpr() {
         return plusMinusExpr();
     }
 
     private Expression plusMinusExpr() {
-        Expression result = multiplicative();
+        Expression result = mulDivExpr();
 
         while (true) {
             String current = get(0).type;
 
             if (match("+") || match("-")) {
-                result = new BinaryExpression(current.charAt(0), result, multiplicative());
+                result = new BinaryExpression(current.charAt(0), result, mulDivExpr());
                 continue;
             }
             break;
@@ -50,7 +66,7 @@ public final class Parser {
         return result;
     }
 
-    private Expression multiplicative() {
+    private Expression mulDivExpr() {
         Expression result = unary();
 
         while (true) {
@@ -76,15 +92,23 @@ public final class Parser {
     private Expression primary() {
         final Token current = get(0);
         if (match("NUMBER")) {
-            return new NumberExpression(Double.parseDouble(current.text));
+            return new ValueExpression(Double.parseDouble(current.text));
+        }
+        if (match("STRING")) {
+            return new ValueExpression(get(0).text);
         }
         if (match("LPAR")) {
-            Expression result = expression();
+            Expression result = getExpr();
             match("RPAR");
             return result;
         }
-        jfError.addError("Unknown token!");
-        return new NumberExpression(Double.parseDouble("0"));
+        if (match("WORD"))  {
+            return new ValueExpression(
+                    Variables.get(get(-1).text)
+            );
+        }
+        jfError.addError("Unknown token!" + get(0).toString() + " " + pos);
+        return new ValueExpression(Double.parseDouble("0"));
     }
 
     private boolean match(String type) {

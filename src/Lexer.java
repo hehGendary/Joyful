@@ -32,9 +32,30 @@ public class Lexer {
             if (operatorsClass.inOperators(current)) {
                 makeOperator();
             }
+
+            if (Character.isLetter(current)) {
+                makeWord();
+            }
+
+            if (current == ' ') pos++;
         }
 
         return new LexerBox(tokens, jfError);
+    }
+
+    private void makeWord() {
+        StringBuilder word = new StringBuilder();
+        char current = currentChar();
+
+        while (Character.isLetterOrDigit(current)) {
+            word.append(current);
+            pos++;
+            current = currentChar();
+        }
+
+        String Ttext = word.toString();
+        String TType= new SpecialWord().getTT(Ttext);
+        addToken(Ttext, TType);
     }
 
     private void makeNumber() {
@@ -81,8 +102,41 @@ public class Lexer {
         addToken(operatorType);
     }
 
+    private void tokenizeText() {
+        next();
+        final StringBuilder buffer = new StringBuilder();
+        char current = currentChar();
+        while (true) {
+            if (current == '\\') {
+                current = next();
+                switch (current) {
+                    case '"': current = next(); buffer.append('"'); continue;
+                    case 'n': current = next(); buffer.append('\n'); continue;
+                    case 't': current = next(); buffer.append('\t'); continue;
+                }
+                buffer.append('\\');
+                continue;
+            }
+            if (current == '"') break;
+            buffer.append(current);
+            current = next();
+        }
+        next();
+
+        addToken("STRING", buffer.toString());
+    }
+
     private char currentChar() {
         try {
+            return code.charAt(pos);
+        } catch (Exception ex) {
+            return '\0';
+        }
+    }
+
+    private char next() {
+        try {
+            pos++;
             return code.charAt(pos);
         } catch (Exception ex) {
             return '\0';
