@@ -19,6 +19,8 @@ public class Operators {
             case ")" -> "RPAR";
             case "<" -> "LESS";
             case ">" -> "BIGGER";
+            case "=" -> "MAKEEQUALS";
+            case "==" -> "EQUALS";
 
             default -> "";
         };
