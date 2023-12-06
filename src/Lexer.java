@@ -37,6 +37,10 @@ public class Lexer {
                 makeWord();
             }
 
+            if (current == '"') {
+                makeStr();
+            }
+
             if (current == ' ') pos++;
         }
 
@@ -47,7 +51,7 @@ public class Lexer {
         StringBuilder word = new StringBuilder();
         char current = currentChar();
 
-        while (Character.isLetterOrDigit(current)) {
+        while (Character.isLetterOrDigit(current) && (current != ' ')) {
             word.append(current);
             pos++;
             current = currentChar();
@@ -85,8 +89,7 @@ public class Lexer {
         while (operatorsClass.inOperators(current)) {
             if (operatorsClass.inParens(current) != startingInParens) {
                 break;
-            }
-            if (startingInParens && operator.toString().length() == 1) {
+            } else if (startingInParens && operator.toString().length() == 1) {
                 break;
             }
 
@@ -102,7 +105,7 @@ public class Lexer {
         addToken(operatorType);
     }
 
-    private void tokenizeText() {
+    private void makeStr() {
         next();
         final StringBuilder buffer = new StringBuilder();
         char current = currentChar();

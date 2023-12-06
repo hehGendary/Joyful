@@ -1,0 +1,4 @@
+a = pi + e
+b = a * a
+print("NUM")
+print(b*a)

@@ -1,3 +1,4 @@
+
 public class Operators {
     public final String operators = "+-*/()<>=";
 
@@ -11,10 +12,7 @@ public class Operators {
 
     public String operatorType(String operator) {
         return switch (operator) {
-            case "+" -> "+";
-            case "-" -> "-";
-            case "*" -> "*";
-            case "/" -> "/";
+            case "+", "-", "*", "/" -> operator;
             case "(" -> "LPAR";
             case ")" -> "RPAR";
             case "<" -> "LESS";
