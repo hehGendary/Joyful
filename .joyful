@@ -1,4 +1,5 @@
 a = pi + e
-b = a * a
-print("NUM")
-print(b*a)
+b = (a * a)
+print("lmao")
+print(a*b)
+print(phi)

@@ -27,7 +27,7 @@ public final class Parser {
     }
 
     private Statement getStatement() {
-        if (match("print")) {
+        if (match("PRINT")) {
             if (!match("LPAR")) jfError.addError("Unknown token " + get(0).toString());
             Expression printExpr = getExpr();
             if (!match("RPAR")) jfError.addError("Unknown token" + get(0).toString());
@@ -59,8 +59,9 @@ public final class Parser {
             if (match("+") || match("-")) {
                 result = new BinaryExpression(current.charAt(0), result, mulDivExpr());
                 continue;
+            } else {
+                break;
             }
-            break;
         }
 
         return result;
@@ -75,8 +76,9 @@ public final class Parser {
             if (match("*") || match("/")) {
                 result = new BinaryExpression(current.charAt(0), result, unary());
                 continue;
+            } else {
+                break;
             }
-            break;
         }
 
         return result;
@@ -95,7 +97,7 @@ public final class Parser {
             return new ValueExpression(Double.parseDouble(current.text));
         }
         if (match("STRING")) {
-            return new ValueExpression(get(0).text);
+            return new ValueExpression(current.text);
         }
         if (match("LPAR")) {
             Expression result = getExpr();
@@ -104,7 +106,7 @@ public final class Parser {
         }
         if (match("WORD"))  {
             return new ValueExpression(
-                    Variables.get(get(-1).text)
+                    Variables.get(current.text).asDouble()
             );
         }
         jfError.addError("Unknown token!" + get(0).toString() + " " + pos);

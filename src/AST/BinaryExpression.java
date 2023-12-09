@@ -5,6 +5,14 @@ public final class BinaryExpression implements Expression {
     private final Expression expr1, expr2;
     private final char operation;
 
+    private double tod(String str) {
+        return Double.parseDouble(str.replace(',', '.'));
+    }
+
+    private String tos(double dou) {
+        return String.valueOf(dou);
+    }
+
     public BinaryExpression(char operation, Expression expr1, Expression expr2) {
         this.operation = operation;
         this.expr1 = expr1;
@@ -12,14 +20,26 @@ public final class BinaryExpression implements Expression {
     }
 
     @Override
-    public double eval() {
+    public String eval() {
         switch (operation) {
-            case '-': return expr1.eval() - expr2.eval();
-            case '*': return expr1.eval() * expr2.eval();
-            case '/': return expr1.eval() / expr2.eval();
+            case '-': return tos(tod(expr1.eval()) - tod(expr2.eval()));
+            case '*': return tos(tod(expr1.eval()) * tod(expr2.eval()));
+            case '/': return tos(tod(expr1.eval()) / tod(expr2.eval()));
             case '+':
             default:
-                return expr1.eval() + expr2.eval();
+                return tos(tod(expr1.eval()) + tod(expr2.eval()));
+        }
+    }
+
+    @Override
+    public Value valEval() {
+        switch (operation) {
+            case '-': return new NumberValue(tod(expr1.eval()) - tod(expr2.eval()));
+            case '*': return new NumberValue(tod(expr1.eval()) * tod(expr2.eval()));
+            case '/': return new NumberValue(tod(expr1.eval()) / tod(expr2.eval()));
+            case '+':
+            default:
+                return new NumberValue(tod(expr1.eval()) + tod(expr2.eval()));
         }
     }
 

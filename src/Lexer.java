@@ -1,115 +1,123 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class Lexer {
+public final class Lexer {
 
-    String code;
-    List<Token> tokens;
-    int codeLength;
-    JoyfulError jfError;
+    private static final String OPERATOR_CHARS = "+-*/%()[]{}=<>!&|,^~?:";
 
-    Operators operatorsClass = new Operators();
-    String operators = operatorsClass.operators;
-    public Lexer(String code, JoyfulError jfError) {
-        this.code = code;
-        this.jfError = jfError;
-        this.codeLength = code.length();
-        this.tokens = new ArrayList<>();
+    private static final Map<String, String> OPERATORS;
+    static {
+        OPERATORS = new HashMap<>();
+        OPERATORS.put("+", "+");
+        OPERATORS.put("-", "-");
+        OPERATORS.put("*", "*");
+        OPERATORS.put("/", "/");
+        OPERATORS.put("(", "LPAR");
+        OPERATORS.put(")", "RPAR");
+        OPERATORS.put("=", "MAKEEQUALS");
+        OPERATORS.put("==", "EQUALS");
     }
 
-    int pos;
-    public LexerBox makeTokens() {
-        for (int pos = 0; pos < codeLength; pos++) {
-            if (jfError.haveError) {
-                System.out.println(jfError.errorDetails);
-                break;
-            }
-            char current = currentChar();
+    private final String input;
+    private final int length;
 
-            if (Character.isDigit(current)) {
-                makeNumber();
-            }
+    private final List<Token> tokens;
 
-            if (operatorsClass.inOperators(current)) {
-                makeOperator();
-            }
+    private int pos;
 
-            if (Character.isLetter(current)) {
-                makeWord();
-            }
+    public Lexer(String input) {
+        this.input = input;
+        length = input.length();
 
-            if (current == '"') {
-                makeStr();
-            }
-
-            if (current == ' ') pos++;
-        }
-
-        return new LexerBox(tokens, jfError);
+        tokens = new ArrayList<>();
     }
 
-    private void makeWord() {
-        StringBuilder word = new StringBuilder();
-        char current = currentChar();
-
-        while (Character.isLetterOrDigit(current) && (current != ' ')) {
-            word.append(current);
-            pos++;
-            current = currentChar();
-        }
-
-        String Ttext = word.toString();
-        String TType= new SpecialWord().getTT(Ttext);
-        addToken(Ttext, TType);
-    }
-
-    private void makeNumber() {
-        StringBuilder number = new StringBuilder();
-        int dotCount = 0;
-        char current = currentChar();
-
-        while (Character.isDigit(current) || current == '.') {
-            if (current == '.') dotCount++;
-            number.append(current);
-            pos++;
-            current = currentChar();
-        }
-
-        if (dotCount > 1) {
-            jfError.addError("Invalid float error! (" + number.toString() + ")");
-        }
-        addToken(number.toString(), "NUMBER");
-    }
-
-    private void makeOperator() {
-        char current = currentChar();
-        boolean startingInParens = operatorsClass.inParens(current);
-
-        StringBuilder operator = new StringBuilder();
-
-        while (operatorsClass.inOperators(current)) {
-            if (operatorsClass.inParens(current) != startingInParens) {
-                break;
-            } else if (startingInParens && operator.toString().length() == 1) {
-                break;
+    public List<Token> tokenize() {
+        while (pos < length) {
+            final char current = peek(0);
+            if (Character.isDigit(current)) tokenizeNumber();
+            else if (Character.isLetter(current)) tokenizeWord();
+            else if (current == '"') tokenizeText();
+            else if (OPERATOR_CHARS.indexOf(current) != -1) {
+                tokenizeOperator();
+            } else {
+                next();
             }
-
-            operator.append(current);
-            pos++;
-            current = currentChar();
         }
-
-        String operatorType = operatorsClass.operatorType(operator.toString());
-        if (operatorType == "") {
-            jfError.addError(operator.toString() + " not operator!");
-        }
-        addToken(operatorType);
+        return tokens;
     }
 
-    private void makeStr() {
-        next();
+    private void tokenizeNumber() {
         final StringBuilder buffer = new StringBuilder();
-        char current = currentChar();
+        char current = peek(0);
         while (true) {
+            if (current == '.') {
+                if (buffer.indexOf(".") != -1) throw new RuntimeException("bad float");
+            } else if (!Character.isDigit(current)) {
+                break;
+            }
+            buffer.append(current);
+            current = next();
+        }
+        addToken("NUMBER", buffer.toString());
+    }
+
+    private void tokenizeOperator() {
+        char current = peek(0);
+        if (current == '/') {
+            if (peek(1) == '/') {
+                next();
+                next();
+                tokenizeComment();
+                return;
+            } else if (peek(1) == '*') {
+                next();
+                next();
+                tokenizeMultilineComment();
+                return;
+            }
+        }
+        final StringBuilder buffer = new StringBuilder();
+        while (true) {
+            final String text = buffer.toString();
+            if (!OPERATORS.containsKey(text + current) && !text.isEmpty()) {
+                addToken(OPERATORS.get(text));
+                return;
+            }
+            buffer.append(current);
+            current = next();
+        }
+    }
+
+    private void tokenizeWord() {
+        final StringBuilder buffer = new StringBuilder();
+        char current = peek(0);
+        while (true) {
+            if (current == '\n') break;
+            if (!Character.isLetterOrDigit(current) && (current != '_')  && (current != '$')) {
+                break;
+            }
+            buffer.append(current);
+            current = next();
+        }
+
+        final String word = buffer.toString();
+        switch (word) {
+            case "print": addToken("PRINT"); break;
+            default:
+                addToken("WORD", word);
+                break;
+        }
+    }
+
+    private void tokenizeText() {
+        next();// skip "
+        final StringBuilder buffer = new StringBuilder();
+        char current = peek(0);
+        while (true) {
+            if (current == '\0') throw new RuntimeException("lmao");
             if (current == '\\') {
                 current = next();
                 switch (current) {
@@ -124,32 +132,48 @@ public class Lexer {
             buffer.append(current);
             current = next();
         }
-        next();
+        next(); // skip closing "
 
         addToken("STRING", buffer.toString());
     }
 
-    private char currentChar() {
-        try {
-            return code.charAt(pos);
-        } catch (Exception ex) {
-            return '\0';
+    private void tokenizeComment() {
+        char current = peek(0);
+        while ("\r\n\0".indexOf(current) == -1) {
+            current = next();
         }
     }
 
-    private char next() {
-        try {
-            pos++;
-            return code.charAt(pos);
-        } catch (Exception ex) {
-            return '\0';
+    private void tokenizeMultilineComment() {
+        char current = peek(0);
+        while (true) {
+            if (current == '\0') throw new RuntimeException("multierror");
+            if (current == '*' && peek(1) == '/') break;
+            current = next();
         }
+        next(); // *
+        next(); // /
     }
-    private void addToken(String type, String text) {
-        tokens.add(new Token(text, type));
+
+    private char next() {
+        pos++;
+        final char result = peek(0);
+        return result;
+    }
+
+    private char peek(int relativePosition) {
+        final int position = pos + relativePosition;
+        if (position >= length) return '\0';
+        return input.charAt(position);
     }
 
     private void addToken(String type) {
         tokens.add(new Token(type));
     }
+
+    private void addToken(String type, String text) {
+        tokens.add(new Token(type, text));
+    }
+
+
 }

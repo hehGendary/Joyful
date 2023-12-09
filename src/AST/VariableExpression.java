@@ -2,6 +2,9 @@
 package AST;
 
 public class VariableExpression implements Expression {
+    private String tos(double dou) {
+        return String.valueOf(dou);
+    }
 
     private final String name;
 
@@ -9,9 +12,14 @@ public class VariableExpression implements Expression {
         this.name = name;
     }
 
-    public double eval() {
+    public String eval() {
         if (!Variables.isExists(name)) throw new RuntimeException("Constant does not exists");
-        return Variables.get(name).asDouble();
+        return tos(Variables.get(name).asDouble());
+    }
+
+    public Value valEval() {
+        if (!Variables.isExists(name)) throw new RuntimeException("Constant does not exists");
+        return Variables.get(name);
     }
 
     @Override

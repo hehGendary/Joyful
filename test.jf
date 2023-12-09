@@ -1,1 +1,6 @@
-a = pi + e print(a * a)
+a = pi + e
+print(a * a)
+a = 3 + 2
+b = a * pi - e
+print("num")
+print(b)

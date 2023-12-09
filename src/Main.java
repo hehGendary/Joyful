@@ -16,7 +16,7 @@ public class Main {
         String line;
         StringBuilder sb = new StringBuilder();
         while ((line = br.readLine()) != null) {
-            sb.append(line);
+            sb.append(line + "\n");
         }
         String for_ret = sb.toString();
         br.close();
@@ -26,7 +26,7 @@ public class Main {
         boolean run = true;
         while (run) {
             List<String> code = new ArrayList<>();
-            System.out.println("Code: (send name of file after send END for end, STOP END - for exit)");
+            System.out.println("Code: (send name of file after send END for end");
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 String line = scanner.nextLine();
@@ -43,7 +43,8 @@ public class Main {
             filename = String.valueOf(Paths.get(filename));
             File file = new File(String.valueOf(Paths.get(filename)));
 
-            String input = String.join("\n", code).replaceAll("STOP", "");
+            String input = String.join("\n", code);
+
             if (!file.createNewFile() && input.isEmpty()){
                 input = open(filename);
             }
@@ -51,34 +52,19 @@ public class Main {
                 Files.write(Paths.get(file.toURI()), input.getBytes(), StandardOpenOption.APPEND);
             }
 
+            System.out.println(input);
             JoyfulError jfError = new JoyfulError();
-            parenErrorCheck pec = new parenErrorCheck(input);
-            boolean haveParenError = pec.check();
+            List<Token> tokens = new Lexer(input).tokenize();
 
-            if (!haveParenError) {
-
-                LexerBox lexerBox = new Lexer(input, jfError).makeTokens();
-
-                List<Token> tokens = lexerBox.tokens;
-                if (!lexerBox.jfError.haveError) {
-                    for (Token token : tokens) {
-                        System.out.println(token.toString());
-                    }
-                    ParserBox parserBox = new Parser(tokens, lexerBox.jfError).parse();
-                    if (!parserBox.jfError.haveError) {
-                        Statement AST = parserBox.ast;
-                        AST.execute();
-                    } else {
-                        System.out.println(parserBox.jfError.errorDetails);
-                    }
-                } else {
-                    System.out.println(lexerBox.jfError.errorDetails);
-                }
-
-
+            for (Token token : tokens) {
+                System.out.println(token.toString());
+            }
+            ParserBox parserBox = new Parser(tokens, new JoyfulError()).parse();
+            if (!parserBox.jfError.haveError) {
+                Statement AST = parserBox.ast;
+                AST.execute();
             } else {
-                jfError.addError("Parens error!");
-                System.out.println(jfError.errorDetails);
+                System.out.println(parserBox.jfError.errorDetails);
             }
         }
     }

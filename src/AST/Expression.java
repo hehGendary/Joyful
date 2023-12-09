@@ -1,5 +1,7 @@
 package AST;
 
 public interface Expression {
-    double eval();
+    String eval();
+
+    Value valEval();
 }

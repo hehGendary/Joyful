@@ -17,8 +17,12 @@ public final class ValueExpression implements Expression {
     }
 
     @Override
-    public double eval() {
-        return value.asDouble();
+    public String eval() {
+        return value.asStr();
+    }
+
+    public Value valEval() {
+        return value;
     }
 
     @Override
