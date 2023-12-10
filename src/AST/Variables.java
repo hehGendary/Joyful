@@ -16,6 +16,8 @@ public final class Variables {
         variables.put("pi", asValue(Math.PI));
         variables.put("e", asValue(Math.E));
         variables.put("phi", asValue(1.618));
+        variables.put("true", asValue(1));
+        variables.put("false", asValue(0));
     }
 
     public static boolean isExists(String key) {

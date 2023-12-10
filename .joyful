@@ -1,5 +1,9 @@
-a = pi + e
-b = (a * a)
-print("lmao")
-print(a*b)
+a = pi*e/2
+b = phi*phi
 print(a)
+print(b)
+if (a > b) {
+    print(a)
+} else {
+    print(b)
+}

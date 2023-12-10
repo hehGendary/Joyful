@@ -3,4 +3,6 @@ print(a * a)
 a = 3 + 2
 b = a * pi - e
 print("num")
+print(a)
 print(b)
+print(a<b)

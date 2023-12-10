@@ -1,5 +1,5 @@
 import AST.*;
-
+import AST.BlockStatement;
 import java.util.List;
 
 public final class Parser {
@@ -33,6 +33,9 @@ public final class Parser {
             if (!match("RPAR")) jfError.addError("Unknown token" + get(0).toString());
             return new PrintStatement(printExpr);
         }
+        if (match("IF")) {
+            return ifElse();
+        }
         return makeStatement();
     }
 
@@ -40,15 +43,92 @@ public final class Parser {
         Token current = get(0);
         if (match("WORD") && get(0).type == "MAKEEQUALS") {
             final String variable = current.text;
-            if (!match("MAKEEQUALS")) throw new RuntimeException("idi ti");
+            consume("MAKEEQUALS");
             return new makeVariableStatement(variable, getExpr());
         }
         jfError.addError("Unknown statement!++");
         return new BlockStatement();
     }
 
+    private Statement block() {
+        BlockStatement st = new BlockStatement();
+        consume("LBRACE");
+        while (!match("RBRACE")) {
+            st.add(getStatement());
+        }
+        return st;
+    }
+
+    private Statement blOrSt() {
+        if (get(0).type == "LBRACE") return block();
+        return getStatement();
+    }
+
+    private Statement ifElse() {
+        Expression cond = getExpr();
+        Statement ifSt = blOrSt();
+        Statement elseSt;
+        if (match("ELSE")) {
+            elseSt = blOrSt();
+        } else {
+            elseSt = null;
+        }
+        return new ifElseStatement(cond, ifSt, elseSt);
+    }
     private Expression getExpr() {
-        return plusMinusExpr();
+        return OrExpr();
+    }
+
+    private Expression OrExpr() {
+        Expression result = AndExpr();
+
+        while (true) {
+            if (match("|")) {
+                result = new BinaryExpression('|', result, AndExpr());
+                continue;
+            } else {
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    private Expression AndExpr() {
+        Expression result = condExpr();
+
+        while (true) {
+            if (match("&")) {
+                result = new BinaryExpression('&', result, condExpr());
+                continue;
+            } else {
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    private Expression condExpr() {
+        Expression result = plusMinusExpr();
+
+        while (true) {
+            if (match("==")) {
+                result = new BinaryExpression('=', result, plusMinusExpr());
+                continue;
+            }
+            if (match(">")) {
+                result = new BinaryExpression('>', result, plusMinusExpr());
+                continue;
+            }
+            if (match("<")) {
+                result = new BinaryExpression('<', result, plusMinusExpr());
+                continue;
+            }
+            break;
+        }
+
+        return result;
     }
 
     private Expression plusMinusExpr() {
@@ -89,6 +169,9 @@ public final class Parser {
         if (match("-")) {
             return new UnaryExpression('-', primary());
         }
+        if (match("!")) {
+            return new UnaryExpression('!', primary());
+        }
         return primary();
     }
 
@@ -102,7 +185,7 @@ public final class Parser {
         }
         if (match("LPAR")) {
             Expression result = getExpr();
-            match("RPAR");
+            consume("RPAR");
             return result;
         }
         if (match("WORD"))  {
@@ -112,6 +195,9 @@ public final class Parser {
         return new ValueExpression(Double.parseDouble("7"));
     }
 
+    private void consume(String type) {
+        if (!match(type)) throw new RuntimeException("unknowm");
+    }
     private boolean match(String type) {
         final Token current = get(0);
         if (type != current.type) return false;

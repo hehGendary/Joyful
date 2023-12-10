@@ -18,6 +18,7 @@ public final class UnaryExpression implements Expression {
     public String eval() {
         switch (operation) {
             case '-': return "-" + expr1.eval();
+            case '!': return "!" + expr1.eval();
             case '+':
             default:
                 return expr1.eval();
@@ -28,6 +29,8 @@ public final class UnaryExpression implements Expression {
     public Value valEval() {
         switch (operation) {
             case '-': return new NumberValue(tod("-" + expr1.eval()));
+            case '!': return new NumberValue(expr1.valEval().asNum() == 0.0
+                    ? 1 : 0);
             case '+':
             default:
                 return new NumberValue(tod(expr1.eval()));

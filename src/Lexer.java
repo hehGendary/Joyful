@@ -6,7 +6,6 @@ import java.util.Map;
 public final class Lexer {
 
     private static final String OPERATOR_CHARS = "+-*/%()[]{}=<>!&|,^~?:";
-
     private static final Map<String, String> OPERATORS;
     static {
         OPERATORS = new HashMap<>();
@@ -17,7 +16,14 @@ public final class Lexer {
         OPERATORS.put("(", "LPAR");
         OPERATORS.put(")", "RPAR");
         OPERATORS.put("=", "MAKEEQUALS");
-        OPERATORS.put("==", "EQUALS");
+        OPERATORS.put("==", "==");
+        OPERATORS.put("!", "!");
+        OPERATORS.put("&", "&");
+        OPERATORS.put("|", "|");
+        OPERATORS.put("{", "LBRACE");
+        OPERATORS.put("}", "RBRACE");
+        OPERATORS.put(">", ">");
+        OPERATORS.put("<", "<");
     }
 
     private final String input;
@@ -106,6 +112,8 @@ public final class Lexer {
         final String word = buffer.toString();
         switch (word) {
             case "print": addToken("PRINT"); break;
+            case "if": addToken("IF"); break;
+            case "else": addToken("ELSE"); break;
             default:
                 addToken("WORD", word);
                 break;

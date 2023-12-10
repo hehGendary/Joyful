@@ -21,25 +21,26 @@ public final class BinaryExpression implements Expression {
 
     @Override
     public String eval() {
-        switch (operation) {
-            case '-': return tos(tod(expr1.eval()) - tod(expr2.eval()));
-            case '*': return tos(tod(expr1.eval()) * tod(expr2.eval()));
-            case '/': return tos(tod(expr1.eval()) / tod(expr2.eval()));
-            case '+':
-            default:
-                return tos(tod(expr1.eval()) + tod(expr2.eval()));
-        }
+        return tos(valEval().asDouble());
     }
 
     @Override
     public Value valEval() {
+        float first = expr1.valEval().asNum();
+        float second = expr2.valEval().asNum();
         switch (operation) {
-            case '-': return new NumberValue(tod(expr1.eval()) - tod(expr2.eval()));
-            case '*': return new NumberValue(tod(expr1.eval()) * tod(expr2.eval()));
-            case '/': return new NumberValue(tod(expr1.eval()) / tod(expr2.eval()));
-            case '+':
+
+            case '+': return new NumberValue((double)first + second);
+            case '*': return new NumberValue((double)first * second);
+            case '/': return new NumberValue((double)first / second);
+            case '&': return new NumberValue((first == 1 && second == 1) ? 1 : 0);
+            case '|': return new NumberValue((first == 1 || second == 1) ? 1 : 0);
+            case '=': return new NumberValue((first == second) ? 1 : 0);
+            case '>': return new NumberValue((first > second) ? 1 : 0);
+            case '<': return new NumberValue((first < second) ? 1 : 0);
+            case '-':
             default:
-                return new NumberValue(tod(expr1.eval()) + tod(expr2.eval()));
+                return new NumberValue((double) first-second);
         }
     }
 
