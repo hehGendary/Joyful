@@ -37,10 +37,11 @@ public final class Parser {
     }
 
     private Statement makeStatement() {
-        if (match("WORD")) {
-            String varName = get(-1).text;
-            if (!match("MAKEEQUALS")) jfError.addError("Unkniwn syntax!");
-            return new makeVariableStatement(varName, getExpr());
+        Token current = get(0);
+        if (match("WORD") && get(0).type == "MAKEEQUALS") {
+            final String variable = current.text;
+            if (!match("MAKEEQUALS")) throw new RuntimeException("idi ti");
+            return new makeVariableStatement(variable, getExpr());
         }
         jfError.addError("Unknown statement!++");
         return new BlockStatement();
@@ -105,12 +106,10 @@ public final class Parser {
             return result;
         }
         if (match("WORD"))  {
-            return new ValueExpression(
-                    Variables.get(current.text).asDouble()
-            );
+            return new VariableExpression(current.text);
         }
         jfError.addError("Unknown token!" + get(0).toString() + " " + pos);
-        return new ValueExpression(Double.parseDouble("0"));
+        return new ValueExpression(Double.parseDouble("7"));
     }
 
     private boolean match(String type) {

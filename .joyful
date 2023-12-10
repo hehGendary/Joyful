@@ -2,4 +2,4 @@ a = pi + e
 b = (a * a)
 print("lmao")
 print(a*b)
-print(phi)
+print(a)
