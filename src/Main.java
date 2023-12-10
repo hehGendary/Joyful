@@ -52,12 +52,12 @@ public class Main {
                 Files.write(Paths.get(file.toURI()), input.getBytes(), StandardOpenOption.APPEND);
             }
 
-            System.out.println(input);
+            //System.out.println(input);
             JoyfulError jfError = new JoyfulError();
             List<Token> tokens = new Lexer(input).tokenize();
 
             for (Token token : tokens) {
-                System.out.println(token.toString());
+                //System.out.println(token.toString());
             }
             ParserBox parserBox = new Parser(tokens, new JoyfulError()).parse();
             if (!parserBox.jfError.haveError) {
