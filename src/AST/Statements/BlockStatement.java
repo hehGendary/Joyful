@@ -1,4 +1,4 @@
-package AST;
+package AST.Statements;
 
 import java.util.ArrayList;
 import java.util.List;

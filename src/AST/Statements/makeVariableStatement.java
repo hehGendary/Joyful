@@ -1,4 +1,9 @@
-package AST;
+package AST.Statements;
+
+import AST.Expressions.Expression;
+import AST.Library.Variables;
+import AST.Values.NumberValue;
+import AST.Values.Value;
 
 public final class makeVariableStatement implements Statement {
 

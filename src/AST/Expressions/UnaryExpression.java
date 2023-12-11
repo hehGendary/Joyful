@@ -1,4 +1,7 @@
-package AST;
+package AST.Expressions;
+
+import AST.Values.NumberValue;
+import AST.Values.Value;
 
 public final class UnaryExpression implements Expression {
 

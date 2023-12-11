@@ -1,4 +1,7 @@
-package AST;
+package AST.Library;
+
+import AST.Values.NumberValue;
+import AST.Values.Value;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,6 +1,5 @@
 
-import AST.Expression;
-import AST.Statement;
+import AST.Statements.Statement;
 
 import java.io.*;
 import java.nio.file.Files;

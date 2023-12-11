@@ -1,4 +1,4 @@
-package AST;
+package AST.Values;
 
 public class NumberValue implements Value {
     double value;

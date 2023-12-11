@@ -1,5 +1,8 @@
 
-package AST;
+package AST.Expressions;
+
+import AST.Library.Variables;
+import AST.Values.Value;
 
 public class VariableExpression implements Expression {
     private String tos(double dou) {

@@ -1,4 +1,6 @@
-package AST;
+package AST.Statements;
+
+import AST.Expressions.Expression;
 
 public final class ifElseStatement implements Statement {
 

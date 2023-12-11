@@ -1,5 +1,7 @@
 import AST.*;
-import AST.BlockStatement;
+import AST.Expressions.*;
+import AST.Statements.*;
+
 import java.util.List;
 
 public final class Parser {

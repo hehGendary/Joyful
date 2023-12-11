@@ -1,4 +1,4 @@
-package AST;
+package AST.Values;
 
 public class StringValue implements Value {
     public final String value;

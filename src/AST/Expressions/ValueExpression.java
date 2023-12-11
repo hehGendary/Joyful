@@ -1,4 +1,8 @@
-package AST;
+package AST.Expressions;
+
+import AST.Values.NumberValue;
+import AST.Values.StringValue;
+import AST.Values.Value;
 
 public final class ValueExpression implements Expression {
 

@@ -1,4 +1,4 @@
-package AST;
+package AST.Values;
 
 public interface Value {
     float asNum();
