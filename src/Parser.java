@@ -40,7 +40,31 @@ public final class Parser {
         if (match("IF")) {
             return ifElse();
         }
+        if (match("FOR")) {
+            return forSt();
+        }
+        if (match("WHILE")) {
+            return whileSt();
+        }
         return makeStatement();
+    }
+
+    private Statement whileSt() {
+        final Expression condition = getExpr();
+        final Statement statement = blOrSt();
+        return new WhileStatement(condition, statement);
+    }
+
+    private Statement forSt() {
+        consume("LPAR");
+        Statement init = makeStatement();
+        consume("COMMA");
+        Expression term = getExpr();
+        consume("COMMA");
+        Statement incr = makeStatement();
+        consume("RPAR");
+        Statement st = blOrSt();
+        return new ForStatement(init, term, incr, st);
     }
 
     private Statement makeStatement() {
@@ -50,7 +74,8 @@ public final class Parser {
             consume("MAKEEQUALS");
             return new makeVariableStatement(variable, getExpr());
         }
-        throw new JFExpection("Unknown statement", "");
+        throw new JFExpection("Unknown statement",
+                String.format("line: %i, char: %i", current.line, current.ch));
     }
 
     private Statement block() {

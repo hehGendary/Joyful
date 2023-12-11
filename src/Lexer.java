@@ -22,6 +22,7 @@ public final class Lexer {
         OPERATORS.put("|", "|");
         OPERATORS.put("{", "LBRACE");
         OPERATORS.put("}", "RBRACE");
+        OPERATORS.put(",", "COMMA");
         OPERATORS.put(">", ">");
         OPERATORS.put("<", "<");
     }
@@ -119,6 +120,8 @@ public final class Lexer {
             case "print": addToken("PRINT"); break;
             case "if": addToken("IF"); break;
             case "else": addToken("ELSE"); break;
+            case "for": addToken("FOR"); break;
+            case "while": addToken("WHILE"); break;
             default:
                 addToken("WORD", word);
                 break;
