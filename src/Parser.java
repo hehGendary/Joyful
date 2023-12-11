@@ -68,7 +68,9 @@ public final class Parser {
     }
 
     private Statement ifElse() {
+        consume("LPAR");
         Expression cond = getExpr();
+        consume("RPAR");
         Statement ifSt = blOrSt();
         Statement elseSt;
         if (match("ELSE")) {
