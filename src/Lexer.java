@@ -33,6 +33,9 @@ public final class Lexer {
 
     private int pos;
 
+    private int line = 1;
+    private int ch = 1;
+
     public Lexer(String input) {
         this.input = input;
         length = input.length();
@@ -43,6 +46,7 @@ public final class Lexer {
     public List<Token> tokenize() {
         while (pos < length) {
             final char current = peek(0);
+            if (current == '\n') line++; ch = 0;
             if (Character.isDigit(current)) tokenizeNumber();
             else if (Character.isLetter(current)) tokenizeWord();
             else if (current == '"') tokenizeText();
@@ -51,6 +55,7 @@ public final class Lexer {
             } else {
                 next();
             }
+            ch++;
         }
         return tokens;
     }
@@ -180,7 +185,7 @@ public final class Lexer {
     }
 
     private void addToken(String type, String text) {
-        tokens.add(new Token(type, text));
+        tokens.add(new Token(type, text, ch, line));
     }
 
 

@@ -8,29 +8,31 @@ public final class Parser {
 
     private final List<Token> tokens;
     private final int size;
-    public JoyfulError jfError;
 
     private int pos;
 
-    public Parser(List<Token> tokens, JoyfulError jfError) {
+    public Parser(List<Token> tokens) {
         this.tokens = tokens;
-        this.jfError = jfError;
         size = tokens.size();
     }
 
-    public ParserBox parse() {
+    public Statement parse() {
         final BlockStatement result = new BlockStatement();
-        while (!match("EOF") && !jfError.haveError) {
+        while (!match("EOF")) {
             result.add(getStatement());
         }
-        return new ParserBox(result, jfError);
+        return result;
     }
 
     private Statement getStatement() {
         if (match("PRINT")) {
-            if (!match("LPAR")) jfError.addError("Unknown token " + get(0).toString());
+            if (!match("LPAR")) throw new
+                    JFExpection("Syntax",
+                    String.format("Unknown token! Line %i, Char %i", get(0).line, get(0).ch));
             Expression printExpr = getExpr();
-            if (!match("RPAR")) jfError.addError("Unknown token" + get(0).toString());
+            if (!match("RPAR")) throw new
+                    JFExpection("Syntax",
+                    String.format("Unknown token! Line %i, Char %i", get(0).line, get(0).ch));
             return new PrintStatement(printExpr);
         }
         if (match("IF")) {
@@ -46,8 +48,7 @@ public final class Parser {
             consume("MAKEEQUALS");
             return new makeVariableStatement(variable, getExpr());
         }
-        jfError.addError("Unknown statement!++");
-        return new BlockStatement();
+        throw new JFExpection("Unknown statement", "");
     }
 
     private Statement block() {
@@ -191,12 +192,11 @@ public final class Parser {
         if (match("WORD"))  {
             return new VariableExpression(current.text);
         }
-        jfError.addError("Unknown token!" + get(0).toString() + " " + pos);
-        return new ValueExpression(Double.parseDouble("7"));
+        throw new JFExpection("Unknown token", "");
     }
 
     private void consume(String type) {
-        if (!match(type)) throw new RuntimeException("unknowm");
+        if (!match(type)) throw new JFExpection("", "");
     }
     private boolean match(String type) {
         final Token current = get(0);
