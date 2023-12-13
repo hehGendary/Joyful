@@ -50,6 +50,9 @@ public final class Parser {
         if (match("FUNC")) {
             return functionDefine();
         }
+        if (match("RETURN")) {
+            return new ReturnStatement(getExpr());
+        }
         if (get(0).type == "WORD" && get(1).type == "LPAR") {
             return new FunctionStatement(function());
         }
@@ -81,8 +84,9 @@ public final class Parser {
             consume("MAKEEQUALS");
             return new makeVariableStatement(variable, getExpr());
         }
+        consume("WORD");
         throw new JFExpection("Unknown statement",
-                String.format("line: %i, char: %i", current.line, current.ch));
+                String.format("line: , char: "));
     }
 
     private FunctionDefineStatement functionDefine() {
@@ -93,6 +97,7 @@ public final class Parser {
         argNames = new ArrayList<>();
         while (!match("RPAR")) {
             argNames.add(get(0).text);
+            match(get(0).type);
             match("COMMA");
         }
         final Statement body = blOrSt();

@@ -1,16 +1,16 @@
 func isPrime(num) {
     if (num == 2) return true
-    for (j = 2, j < i, j = j + 1) {
-        if ((i % j) == 0) return false
+    for (j = 2, j < num, j = j + 1) {
+        if ((num % j) == 0) return false
     }
     return true
 }
 
-print(isPrime(78))
-/*for (i = 2, i < 100, i = i + 1) {
+
+for (i = 2, i < 100, i = i + 1) {
     if (isPrime(i)) {
         print(i, " - простое число", "\n")
     } else {
         print(i, " - СЛОЖНОЕ число", "\n")
     }
-}*/
+}

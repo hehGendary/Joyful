@@ -21,7 +21,8 @@ public class VariableExpression implements Expression {
     }
 
     public Value valEval() {
-        if (!Variables.isExists(name)) throw new RuntimeException("Constant does not exists");
+        if (!Variables.isExists(name)) throw new RuntimeException(
+                String.format("Constant %s does not exists", name));
         return Variables.get(name);
     }
 
