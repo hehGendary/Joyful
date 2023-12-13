@@ -1,11 +1,16 @@
-for (i=0, i<10, i=i+1) {
-    print(i)
+func isPrime(num) {
+    if (num == 2) return true
+    for (j = 2, j < i, j = j + 1) {
+        if ((i % j) == 0) return false
+    }
+    return true
 }
-j = 8
 
-print("first loop end")
-
-while (j < 13) {
-    print(j)
-    j = j + 2
-}
+print(isPrime(78))
+/*for (i = 2, i < 100, i = i + 1) {
+    if (isPrime(i)) {
+        print(i, " - простое число", "\n")
+    } else {
+        print(i, " - СЛОЖНОЕ число", "\n")
+    }
+}*/

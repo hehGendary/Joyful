@@ -36,6 +36,7 @@ public final class BinaryExpression implements Expression {
             case '+': return new NumberValue((double)first + second);
             case '*': return new NumberValue((double)first * second);
             case '/': return new NumberValue((double)first / second);
+            case '%': return new NumberValue((double)first % second);
             case '&': return new NumberValue((first == 1 && second == 1) ? 1 : 0);
             case '|': return new NumberValue((first == 1 || second == 1) ? 1 : 0);
             case '=': return new NumberValue((first == second) ? 1 : 0);

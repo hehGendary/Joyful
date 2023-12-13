@@ -2,6 +2,7 @@ import AST.*;
 import AST.Expressions.*;
 import AST.Statements.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Parser {
@@ -46,6 +47,12 @@ public final class Parser {
         if (match("WHILE")) {
             return whileSt();
         }
+        if (match("FUNC")) {
+            return functionDefine();
+        }
+        if (get(0).type == "WORD" && get(1).type == "LPAR") {
+            return new FunctionStatement(function());
+        }
         return makeStatement();
     }
 
@@ -78,6 +85,31 @@ public final class Parser {
                 String.format("line: %i, char: %i", current.line, current.ch));
     }
 
+    private FunctionDefineStatement functionDefine() {
+        final String name = get(0).text;
+        consume("WORD");
+        consume("LPAR");
+        final List<String> argNames;
+        argNames = new ArrayList<>();
+        while (!match("RPAR")) {
+            argNames.add(get(0).text);
+            match("COMMA");
+        }
+        final Statement body = blOrSt();
+        return new FunctionDefineStatement(name, argNames, body);
+    }
+
+    private FunctionalExpression function() {
+        final String name = get(0).text;
+        consume("WORD");
+        consume("LPAR");
+        final FunctionalExpression function = new FunctionalExpression(name);
+        while (!match("RPAR")) {
+            function.addArgument(getExpr());
+            match("COMMA");
+        }
+        return function;
+    }
     private Statement block() {
         BlockStatement st = new BlockStatement();
         consume("LBRACE");
@@ -145,6 +177,10 @@ public final class Parser {
         while (true) {
             if (match("==")) {
                 result = new BinaryExpression('=', result, plusMinusExpr());
+                continue;
+            }
+            if (match("%")) {
+                result = new BinaryExpression('%', result, plusMinusExpr());
                 continue;
             }
             if (match(">")) {
@@ -215,8 +251,11 @@ public final class Parser {
         }
         if (match("LPAR")) {
             Expression result = getExpr();
-            consume("RPAR");
+            match("RPAR");
             return result;
+        }
+        if (get(0).type == "WORD" && get(1).type == "LPAR") {
+            return function();
         }
         if (match("WORD"))  {
             return new VariableExpression(current.text);
@@ -225,7 +264,11 @@ public final class Parser {
     }
 
     private void consume(String type) {
-        if (!match(type)) throw new JFExpection("", "");
+
+        if (!match(type)) {
+            System.out.println(get(0).toString() + get(1).toString() + get(2).toString());
+            throw new JFExpection("", "");
+        }
     }
     private boolean match(String type) {
         final Token current = get(0);

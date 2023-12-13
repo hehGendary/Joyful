@@ -5,7 +5,7 @@ import java.util.Map;
 
 public final class Lexer {
 
-    private static final String OPERATOR_CHARS = "+-*/%()[]{}=<>!&|,^~?:";
+    private static final String OPERATOR_CHARS = "+-*/%()[]{}=<>!&|,^~?:%";
     private static final Map<String, String> OPERATORS;
     static {
         OPERATORS = new HashMap<>();
@@ -13,6 +13,7 @@ public final class Lexer {
         OPERATORS.put("-", "-");
         OPERATORS.put("*", "*");
         OPERATORS.put("/", "/");
+        OPERATORS.put("%", "%");
         OPERATORS.put("(", "LPAR");
         OPERATORS.put(")", "RPAR");
         OPERATORS.put("=", "MAKEEQUALS");
@@ -23,6 +24,7 @@ public final class Lexer {
         OPERATORS.put("{", "LBRACE");
         OPERATORS.put("}", "RBRACE");
         OPERATORS.put(",", "COMMA");
+        OPERATORS.put(";", "SEMICOLON");
         OPERATORS.put(">", ">");
         OPERATORS.put("<", "<");
     }
@@ -117,11 +119,13 @@ public final class Lexer {
 
         final String word = buffer.toString();
         switch (word) {
-            case "print": addToken("PRINT"); break;
+            //case "print": addToken("PRINT"); break;
             case "if": addToken("IF"); break;
             case "else": addToken("ELSE"); break;
             case "for": addToken("FOR"); break;
             case "while": addToken("WHILE"); break;
+            case "func": addToken("FUNC"); break;
+            case "return": addToken("RETURN"); break;
             default:
                 addToken("WORD", word);
                 break;
