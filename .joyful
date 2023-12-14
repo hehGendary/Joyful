@@ -1,16 +1,10 @@
 func isPrime(num) {
-    if (num == 2) return true
     for (j = 2, j < num, j = j + 1) {
         if ((num % j) == 0) return false
     }
     return true
 }
 
-
-for (i = 2, i < 100, i = i + 1) {
-    if (isPrime(i)) {
-        print(i, " - простое число", "\n")
-    } else {
-        print(i, " - СЛОЖНОЕ число", "\n")
-    }
+for (i = 10000, i > 1, i = i - 1) {
+    if (isPrime(i)) println(i)
 }

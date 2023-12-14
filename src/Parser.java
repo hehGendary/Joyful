@@ -31,11 +31,11 @@ public final class Parser {
         if (match("PRINT")) {
             if (!match("LPAR")) throw new
                     JFExpection("Syntax",
-                    String.format("Unknown token! Line %i, Char %i", get(0).line, get(0).ch));
+                    String.format("Unknown token! Line %d, Char %d", get(0).line, get(0).ch));
             Expression printExpr = getExpr();
             if (!match("RPAR")) throw new
                     JFExpection("Syntax",
-                    String.format("Unknown token! Line %i, Char %i", get(0).line, get(0).ch));
+                    String.format("Unknown token! Line %d, Char %d", get(0).line, get(0).ch));
             return new PrintStatement(printExpr);
         }
         if (match("IF")) {
@@ -84,6 +84,15 @@ public final class Parser {
             consume("MAKEEQUALS");
             return new makeVariableStatement(variable, getExpr());
         }
+        if (get(0).type == "WORD" && get(1).type == "LBRACKET") {
+            final String variable = get(0).text;
+            consume("WORD");
+            consume("LBRACKET");
+            final Expression index = getExpr();
+            consume("RBRACKET");
+            consume("=");
+            return new ArrayAssignmentStatement(variable, index, getExpr());
+        }
         consume("WORD");
         throw new JFExpection("Unknown statement",
                 String.format("line: , char: "));
@@ -111,9 +120,34 @@ public final class Parser {
         final FunctionalExpression function = new FunctionalExpression(name);
         while (!match("RPAR")) {
             function.addArgument(getExpr());
-            match("COMMA");
+            if (!match("COMMA")) {
+                consume("RPAR");
+                break;
+            }
         }
         return function;
+    }
+
+    private Expression array() {
+        consume("OPENTREE");
+        final List<Expression> elements = new ArrayList<>();
+        while (!match("CLOSETREE")) {
+            elements.add(getExpr());
+            if (!match("COMMA")) {
+                consume("CLOSEDTREE");
+                break;
+            }
+        }
+        return new ArrayExpression(elements);
+    }
+
+    private Expression element() {
+        final String variable = get(0).text;
+        consume("WORD");
+        consume("LBRACKET");
+        final Expression index = getExpr();
+        consume("RBRACKET");
+        return new ArrayAccessExpression(variable, index);
     }
     private Statement block() {
         BlockStatement st = new BlockStatement();
@@ -248,6 +282,12 @@ public final class Parser {
 
     private Expression primary() {
         final Token current = get(0);
+        if (get(0).type == "OPENTREE") {
+            return array();
+        }
+        if (get(0).type == "WORD" && get(1).type == "LBRACKET") {
+            return element();
+        }
         if (match("NUMBER")) {
             return new ValueExpression(Double.parseDouble(current.text));
         }
@@ -265,7 +305,8 @@ public final class Parser {
         if (match("WORD"))  {
             return new VariableExpression(current.text);
         }
-        throw new JFExpection("Unknown token", "");
+        consume("WORD");
+        return new ValueExpression(777);
     }
 
     private void consume(String type) {

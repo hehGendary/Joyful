@@ -23,9 +23,13 @@ public final class Lexer {
         OPERATORS.put("|", "|");
         OPERATORS.put("{", "LBRACE");
         OPERATORS.put("}", "RBRACE");
+        OPERATORS.put("]", "RBRACKET");
+        OPERATORS.put("[", "LBRACKET");
         OPERATORS.put(",", "COMMA");
         OPERATORS.put(";", "SEMICOLON");
         OPERATORS.put(">", ">");
+        OPERATORS.put("<<", "OPENTREE");
+        OPERATORS.put(">>", "CLOSEDTREE");
         OPERATORS.put("<", "<");
     }
 

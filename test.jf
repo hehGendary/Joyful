@@ -1,8 +1,2 @@
-a = pi + e
-print(a * a)
-a = 3 + 2
-b = a * pi - e
-print("num")
+a = <<2, 4>>
 print(a)
-print(b)
-print(a<b)

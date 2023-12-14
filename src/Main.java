@@ -52,7 +52,6 @@ public class Main {
             }
 
             List<Token> tokens = new Lexer(input).tokenize();
-
             for (Token token : tokens) {
                 //System.out.println(token.toString());
             }
