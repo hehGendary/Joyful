@@ -1,2 +1,22 @@
-a = <<2, 4>>
-print(a)
+func add(arr, number) {
+    oldlen = arrlen(arr)
+    newarray = array(oldlen + 1)
+    for (i = 0, i < oldlen, i = i + 1) {
+        newarray[i] = arr[i]
+    }
+    newarray[oldlen] = number
+    return newarray
+}
+
+primes = <<2>>
+for (i = 2, i < 10000, i = i + 1) {
+    primesLen = arrlen(primes)
+    thisIsPrime = true
+    for (j = 0, j < primesLen, j = j + 1) {
+        if (!(i % primes[j])) thisIsPrime = false
+    }
+    if (thisIsPrime) {
+        primes = add(primes, i)
+        println(i)
+    }
+}

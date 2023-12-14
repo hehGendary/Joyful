@@ -12,6 +12,10 @@ public class StringValue implements Value {
         return 0;
     }
 
+    public int arrLen() {
+        return 0;
+    }
+
     @Override
     public String asStr() {
         return value;

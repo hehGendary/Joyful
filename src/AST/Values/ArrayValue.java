@@ -4,10 +4,15 @@ import java.util.Arrays;
 
 public final class ArrayValue implements Value {
 
-    private final Value[] elements;
+    public final Value[] elements;
 
     public ArrayValue(int size) {
         this.elements = new Value[size];
+    }
+
+    @Override
+    public int arrLen() {
+        return elements.length;
     }
 
     public ArrayValue(Value[] elements) {

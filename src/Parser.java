@@ -79,8 +79,9 @@ public final class Parser {
 
     private Statement makeStatement() {
         Token current = get(0);
-        if (match("WORD") && get(0).type == "MAKEEQUALS") {
+        if (get(0).type == "WORD" && get(1).type == "MAKEEQUALS") {
             final String variable = current.text;
+            consume("WORD");
             consume("MAKEEQUALS");
             return new makeVariableStatement(variable, getExpr());
         }
@@ -90,7 +91,7 @@ public final class Parser {
             consume("LBRACKET");
             final Expression index = getExpr();
             consume("RBRACKET");
-            consume("=");
+            consume("MAKEEQUALS");
             return new ArrayAssignmentStatement(variable, index, getExpr());
         }
         consume("WORD");

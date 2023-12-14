@@ -7,6 +7,11 @@ public class NumberValue implements Value {
         this.value = value;
     }
 
+    @Override
+    public int arrLen() {
+        return 0;
+    }
+
     public float asNum() {
         return (float) value;
     }

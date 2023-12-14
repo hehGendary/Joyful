@@ -1,4 +1,5 @@
 package AST.Library;
+import AST.Values.ArrayValue;
 import AST.Values.NumberValue;
 import AST.Values.Value;
 
@@ -11,7 +12,7 @@ public final class Functions {
 
     static {
         functions = new HashMap<>();
-        functions.put("sin", new Function() {
+        functions.put("sin",    new Function() {
 
             @Override
             public Value execute(Value... args) {
@@ -23,6 +24,15 @@ public final class Functions {
             if (args.length != 1) throw new RuntimeException("One arg expected");
             return new NumberValue(Math.cos(args[0].asNum()));
         });
+        functions.put("array", (Function) (Value... args) -> {
+            if (args.length != 1) throw new RuntimeException("One arg expected");
+            return new ArrayValue((int)args[0].asNum());
+        });
+        functions.put("arrlen", (Function) (Value... args) -> {
+            if (args.length != 1) throw new RuntimeException("One arg expected");
+            return new NumberValue(args[0].arrLen());
+        });
+
         functions.put("println", args -> {
             for (Value arg : args) {
                 System.out.println(arg.asStr());
