@@ -50,9 +50,14 @@ public final class Functions {
             return new StringValue(String.format("%c", (char)args[0].asNum()));
         });
 
-        functions.put("stringToInt", (Function) (Value... args) -> {
+        functions.put("stringToNum", (Function) (Value... args) -> {
             if (args.length != 1) throw new RuntimeException("");
             return new NumberValue(Double.parseDouble(args[0].asStr()));
+        });
+
+        functions.put("addStr", (Function) (Value... args) -> {
+            if (args.length != 2) throw new RuntimeException("");
+            return new StringValue(args[0].asStr() + args[1].asStr());
         });
 
         functions.put("input", (Function) (Value... args) -> {

@@ -1,27 +1,46 @@
-s = input(">>>")
+alphabet = <<"0", "1", "|">>
 
-size = 30'000
-nums = array(size)
-el = 0
-for (i = 0, i < strlen(s), i = i + 1) {
-    current = char(s, i)
-    if (current == ">") {
-        el = (el + 1) % size
+func noAsnwer(str) {
+    for (i = 0, i < strlen(str), i = i + 1) {
+        if (!(char(str, i) == "|")) return true
     }
-    if (current == "<") {
-         el = (el + size - 1) % size
-    }
-    if (current == "+") {
-        size[el] = size[el] + 1
-    }
-    if (current == "-") {
-        size[el] = size[el] - 1
-    }
-    if (current == ".") {
-        print(numToChar(size[el]))
-    }
-    if (current == ",") {
+    return false
+}
 
+func valid(str) {
+    for (i = 0, i < strlen(str), i = i + 1) {
+        isValid = false
+        for (j = 0, j < arrlen(alphabet), j = j + 1) {
+            if (char(str, i) == alphabet[j]) {
+                isValid = true
+            }
+        }
+        if (!isValid) return false
     }
+    return true
+}
 
+str = input(">>>")
+
+if (false) {
+    println("ERROR!")
+} else {
+    while (true) {
+        newStr = ""
+        for (i = 0, i < strlen(str), i = i + 1) {
+            ch = char(str, i)
+            if (ch == "1") {
+                newStr = addStr(newStr, "0|")
+            }
+            if (ch == "0") {
+                if (!(i == strlen(str) - 1)) {
+                    if (char(str, i + 1) == "|") {
+                        newStr = addStr(newStr, "0||")
+                    }
+                }
+            }
+        }
+        str = newStr
+        println(str)
+    }
 }
