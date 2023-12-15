@@ -20,5 +20,8 @@ for (i = 0, i < strlen(s), i = i + 1) {
     if (current == ".") {
         print(intToChar(size[el]))
     }
+    if (current == ",") {
+
+    }
 
 }
