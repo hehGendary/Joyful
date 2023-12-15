@@ -45,13 +45,13 @@ public final class Functions {
             return new StringValue(String.format("%c", args[0].asStr().charAt((int)args[1].asNum())));
         });
 
-        functions.put("intToChar", (Function) (Value... args) -> {
+        functions.put("numToChar", (Function) (Value... args) -> {
             if (args.length != 1) throw new RuntimeException("");
             return new StringValue(String.format("%c", (char)args[0].asNum()));
         });
 
-        functions.put("intToChar", (Function) (Value... args) -> {
-            if (args.length != 2) throw new RuntimeException("");
+        functions.put("", (Function) (Value... args) -> {
+            if (args.length != 1) throw new RuntimeException("");
             return new StringValue(String.format("%c", (char)args[1].asNum()));
         });
 
