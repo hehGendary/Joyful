@@ -47,7 +47,7 @@ public final class Functions {
 
         functions.put("intToChar", (Function) (Value... args) -> {
             if (args.length != 2) throw new RuntimeException("");
-            return new StringValue(String.format("%c", args[0].asStr().charAt((int)args[1].asNum())));
+            return new StringValue(String.format("%c", (char)args[1].asNum()));
         });
 
         functions.put("input", (Function) (Value... args) -> {
