@@ -3,6 +3,7 @@ package AST.Expressions;
 
 import AST.Library.Variables;
 import AST.Values.Value;
+import AST.Visitors.Visitor;
 
 public class VariableExpression implements Expression {
     private String tos(double dou) {
@@ -29,5 +30,10 @@ public class VariableExpression implements Expression {
     @Override
     public String toString() {
         return String.format("%s", name);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

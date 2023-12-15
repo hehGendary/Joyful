@@ -2,6 +2,7 @@ package AST.Statements;
 
 import AST.Library.Functions;
 import AST.Library.UserDefinedFunction;
+import AST.Visitors.Visitor;
 
 import java.util.List;
 
@@ -26,4 +27,10 @@ public final class FunctionDefineStatement implements Statement {
     public String toString() {
         return "def (" + argNames.toString() + ") " + body.toString();
     }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
 }
+

@@ -5,6 +5,7 @@ import AST.Library.Functions;
 import AST.Library.UserDefinedFunction;
 import AST.Library.Variables;
 import AST.Values.Value;
+import AST.Visitors.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,5 +56,10 @@ public final class FunctionalExpression implements Expression {
     @Override
     public String eval() {
         return name + "(" + arguments.toString() + ")";
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

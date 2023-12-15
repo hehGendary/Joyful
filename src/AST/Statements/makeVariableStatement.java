@@ -4,6 +4,7 @@ import AST.Expressions.Expression;
 import AST.Library.Variables;
 import AST.Values.NumberValue;
 import AST.Values.Value;
+import AST.Visitors.Visitor;
 
 public final class makeVariableStatement implements Statement {
 
@@ -33,5 +34,10 @@ public final class makeVariableStatement implements Statement {
     @Override
     public String toString() {
         return String.format("%s = %s", variable, expression);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

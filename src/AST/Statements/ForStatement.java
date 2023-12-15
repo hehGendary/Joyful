@@ -2,6 +2,7 @@ package AST.Statements;
 
 import AST.Expressions.Expression;
 import AST.Values.*;
+import AST.Visitors.Visitor;
 
 public final class ForStatement implements Statement {
 
@@ -27,5 +28,10 @@ public final class ForStatement implements Statement {
     @Override
     public String toString() {
         return "for " + initialization + ", " + termination + ", " + increment + " " + statement;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

@@ -1,6 +1,7 @@
 package AST.Statements;
 import AST.*;
 import AST.Expressions.Expression;
+import AST.Visitors.Visitor;
 
 public final class WhileStatement implements Statement {
 
@@ -22,5 +23,10 @@ public final class WhileStatement implements Statement {
     @Override
     public String toString() {
         return "while " + condition + " " + statement;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

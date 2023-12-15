@@ -2,6 +2,7 @@ package AST.Statements;
 
 import AST.Expressions.Expression;
 import AST.Values.Value;
+import AST.Visitors.Visitor;
 
 public final class ReturnStatement extends RuntimeException implements Statement {
 
@@ -25,5 +26,10 @@ public final class ReturnStatement extends RuntimeException implements Statement
     @Override
     public String toString() {
         return "return";
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

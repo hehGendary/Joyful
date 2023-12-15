@@ -4,6 +4,7 @@ import AST.Expressions.Expression;
 import AST.Library.Variables;
 import AST.Values.ArrayValue;
 import AST.Values.Value;
+import AST.Visitors.Visitor;
 
 public final class ArrayAccessExpression implements Expression {
 
@@ -29,5 +30,10 @@ public final class ArrayAccessExpression implements Expression {
     @Override
     public String eval() {
         return String.format("%s[%s]", variable, index);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

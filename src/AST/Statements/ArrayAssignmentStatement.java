@@ -4,6 +4,7 @@ import AST.Expressions.Expression;
 import AST.Library.Variables;
 import AST.Values.ArrayValue;
 import AST.Values.Value;
+import AST.Visitors.Visitor;
 
 public final class ArrayAssignmentStatement implements Statement {
 
@@ -20,13 +21,18 @@ public final class ArrayAssignmentStatement implements Statement {
     @Override
     public void execute() {
         final Value var = Variables.get(variable);
-        if (var instanceof ArrayValue) {
-            final ArrayValue array = (ArrayValue) var;
+        if (var instanceof ArrayValue array) {
             array.set((int) index.valEval().asNum(), expression.valEval());
         } else {
             throw new RuntimeException("Array expected");
         }
     }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
 
     @Override
     public String toString() {

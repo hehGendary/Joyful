@@ -1,6 +1,7 @@
 package AST.Statements;
 
 import AST.Expressions.Expression;
+import AST.Visitors.Visitor;
 
 public final class ifElseStatement implements Statement {
 
@@ -31,5 +32,10 @@ public final class ifElseStatement implements Statement {
             result.append("\nelse ").append(elseStatement);
         }
         return result.toString();
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

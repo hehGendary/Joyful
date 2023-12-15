@@ -2,6 +2,7 @@ package AST.Expressions;
 
 import AST.Values.NumberValue;
 import AST.Values.Value;
+import AST.Visitors.Visitor;
 
 public final class UnaryExpression implements Expression {
 
@@ -43,5 +44,10 @@ public final class UnaryExpression implements Expression {
     @Override
     public String toString() {
         return String.format("%c %s", operation, expr1);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

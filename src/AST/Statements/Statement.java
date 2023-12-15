@@ -1,5 +1,7 @@
 package AST.Statements;
 
-public interface Statement {
+import AST.Library.Node;
+
+public interface Statement extends Node {
     void execute();
 }

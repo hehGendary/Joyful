@@ -2,6 +2,7 @@ package AST.Expressions;
 
 import AST.Values.ArrayValue;
 import AST.Values.Value;
+import AST.Visitors.Visitor;
 
 import java.util.List;
 
@@ -26,5 +27,10 @@ public final class ArrayExpression implements Expression {
     @Override
     public String eval() {
         return elements.toString();
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

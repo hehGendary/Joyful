@@ -1,5 +1,7 @@
 package AST.Statements;
 
+import AST.Visitors.Visitor;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,5 +21,10 @@ public class BlockStatement implements Statement {
         for (Statement st : statements) {
             st.execute();
         }
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

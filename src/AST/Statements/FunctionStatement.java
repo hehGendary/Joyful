@@ -1,6 +1,7 @@
 package AST.Statements;
 
 import AST.Expressions.FunctionalExpression;
+import AST.Visitors.Visitor;
 
 public final class FunctionStatement implements Statement {
 
@@ -18,5 +19,10 @@ public final class FunctionStatement implements Statement {
     @Override
     public String toString() {
         return function.toString();
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

@@ -2,6 +2,7 @@ package AST.Expressions;
 
 import AST.Values.NumberValue;
 import AST.Values.Value;
+import AST.Visitors.Visitor;
 
 public final class TripleExpression implements Expression {
 
@@ -41,5 +42,10 @@ public final class TripleExpression implements Expression {
     @Override
     public String toString() {
         return String.format("%s %c %s", expr1, operation, expr2);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

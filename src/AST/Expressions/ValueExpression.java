@@ -3,6 +3,7 @@ package AST.Expressions;
 import AST.Values.NumberValue;
 import AST.Values.StringValue;
 import AST.Values.Value;
+import AST.Visitors.Visitor;
 
 public final class ValueExpression implements Expression {
 
@@ -32,5 +33,10 @@ public final class ValueExpression implements Expression {
     @Override
     public String toString() {
         return value.asStr();
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }
