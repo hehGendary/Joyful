@@ -1,10 +1,12 @@
 package AST.Library;
 import AST.Values.ArrayValue;
 import AST.Values.NumberValue;
+import AST.Values.StringValue;
 import AST.Values.Value;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public final class Functions {
 
@@ -31,6 +33,28 @@ public final class Functions {
         functions.put("arrlen", (Function) (Value... args) -> {
             if (args.length != 1) throw new RuntimeException("One arg expected");
             return new NumberValue(args[0].arrLen());
+        });
+
+        functions.put("strlen", (Function) (Value... args) -> {
+            if (args.length != 1) throw new RuntimeException("One arg expected");
+            return new NumberValue(args[0].asStr().length());
+        });
+
+        functions.put("char", (Function) (Value... args) -> {
+            if (args.length != 2) throw new RuntimeException("");
+            return new StringValue(String.format("%c", args[0].asStr().charAt((int)args[1].asNum())));
+        });
+
+        functions.put("intToChar", (Function) (Value... args) -> {
+            if (args.length != 2) throw new RuntimeException("");
+            return new StringValue(String.format("%c", args[0].asStr().charAt((int)args[1].asNum())));
+        });
+
+        functions.put("input", (Function) (Value... args) -> {
+            if (args.length != 1) throw new RuntimeException("");
+            Scanner sc = new Scanner(System.in);
+            System.out.print(args[0].asStr());
+            return new StringValue(sc.nextLine());
         });
 
         functions.put("println", args -> {

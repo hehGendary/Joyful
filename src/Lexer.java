@@ -71,6 +71,10 @@ public final class Lexer {
         final StringBuilder buffer = new StringBuilder();
         char current = peek(0);
         while (true) {
+            if (current == '\'') {
+                next();
+                current = peek(0);
+            }
             if (current == '.') {
                 if (buffer.indexOf(".") != -1) throw new RuntimeException("bad float");
             } else if (!Character.isDigit(current)) {

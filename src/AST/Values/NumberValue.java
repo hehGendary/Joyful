@@ -1,10 +1,10 @@
 package AST.Values;
 
 public class NumberValue implements Value {
-    double value;
+    float value;
 
     public NumberValue(double value) {
-        this.value = value;
+        this.value = (float)value;
     }
 
     @Override
@@ -13,7 +13,7 @@ public class NumberValue implements Value {
     }
 
     public float asNum() {
-        return (float) value;
+        return value;
     }
 
     @Override
