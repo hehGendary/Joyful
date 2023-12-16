@@ -2,7 +2,7 @@
 package AST.Expressions;
 
 import AST.Library.Variables.Variables;
-import AST.Values.Value;
+import AST.Values.AbstractValue;
 import Visitors.Visitor;
 
 public class VariableExpression implements AbstractExpression {
@@ -21,7 +21,7 @@ public class VariableExpression implements AbstractExpression {
         return tos(Variables.get(name).asDouble());
     }
 
-    public Value valEval() {
+    public AbstractValue valEval() {
         if (!Variables.isExists(name)) throw new RuntimeException(
                 String.format("Constant %s does not exists", name));
         return Variables.get(name);

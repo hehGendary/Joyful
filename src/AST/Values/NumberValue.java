@@ -1,6 +1,6 @@
 package AST.Values;
 
-public class NumberValue implements Value {
+public class NumberValue implements AbstractValue {
     float value;
 
     public NumberValue(double value) {

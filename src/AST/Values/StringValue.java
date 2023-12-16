@@ -1,6 +1,6 @@
 package AST.Values;
 
-public class StringValue implements Value {
+public class StringValue implements AbstractValue {
     public final String value;
 
     public StringValue(String value) {

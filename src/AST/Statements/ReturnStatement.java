@@ -1,19 +1,19 @@
 package AST.Statements;
 
 import AST.Expressions.AbstractExpression;
-import AST.Values.Value;
+import AST.Values.AbstractValue;
 import Visitors.Visitor;
 
 public final class ReturnStatement extends RuntimeException implements AbstractStatement {
 
     public final AbstractExpression expression;
-    private Value result;
+    private AbstractValue result;
 
     public ReturnStatement(AbstractExpression expression) {
         this.expression = expression;
     }
 
-    public Value getResult() {
+    public AbstractValue getResult() {
         return result;
     }
 

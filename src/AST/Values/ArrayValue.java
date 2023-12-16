@@ -1,13 +1,11 @@
 package AST.Values;
 
-import java.util.Arrays;
+public final class ArrayValue implements AbstractValue {
 
-public final class ArrayValue implements Value {
-
-    public final Value[] elements;
+    public final AbstractValue[] elements;
 
     public ArrayValue(int size) {
-        this.elements = new Value[size];
+        this.elements = new AbstractValue[size];
     }
 
     @Override
@@ -15,8 +13,8 @@ public final class ArrayValue implements Value {
         return elements.length;
     }
 
-    public ArrayValue(Value[] elements) {
-        this.elements = new Value[elements.length];
+    public ArrayValue(AbstractValue[] elements) {
+        this.elements = new AbstractValue[elements.length];
         System.arraycopy(elements, 0, this.elements, 0, elements.length);
     }
 
@@ -24,11 +22,11 @@ public final class ArrayValue implements Value {
         this(array.elements);
     }
 
-    public Value get(int index) {
+    public AbstractValue get(int index) {
         return elements[index];
     }
 
-    public void set(int index, Value value) {
+    public void set(int index, AbstractValue value) {
         elements[index] = value;
     }
 
@@ -46,7 +44,7 @@ public final class ArrayValue implements Value {
     public String asStr() {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
-        for (Value v : elements) {
+        for (AbstractValue v : elements) {
             sb.append(v.asStr());
             sb.append(" ");
         }

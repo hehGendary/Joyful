@@ -1,7 +1,7 @@
 package AST.Expressions;
 
 import AST.Values.NumberValue;
-import AST.Values.Value;
+import AST.Values.AbstractValue;
 import Visitors.Visitor;
 
 public final class UnaryExpression implements AbstractExpression {
@@ -30,7 +30,7 @@ public final class UnaryExpression implements AbstractExpression {
     }
 
     @Override
-    public Value valEval() {
+    public AbstractValue valEval() {
         switch (operation) {
             case '-': return new NumberValue(tod("-" + expr1.eval()));
             case '!': return new NumberValue(expr1.valEval().asNum() == 0.0

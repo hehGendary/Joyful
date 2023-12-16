@@ -3,7 +3,7 @@ package AST.Statements;
 import AST.Expressions.AbstractExpression;
 import AST.Library.Variables.Variables;
 import AST.Values.ArrayValue;
-import AST.Values.Value;
+import AST.Values.AbstractValue;
 import Visitors.Visitor;
 
 public final class ArrayAssignmentStatement implements AbstractStatement {
@@ -20,7 +20,7 @@ public final class ArrayAssignmentStatement implements AbstractStatement {
 
     @Override
     public void execute() {
-        final Value var = Variables.get(variable);
+        final AbstractValue var = Variables.get(variable);
         if (var instanceof ArrayValue array) {
             array.set((int) index.valEval().asNum(), expression.valEval());
         } else {

@@ -1,7 +1,7 @@
 package AST.Expressions;
 
 import AST.Values.NumberValue;
-import AST.Values.Value;
+import AST.Values.AbstractValue;
 import Visitors.Visitor;
 
 public final class BinaryExpression implements AbstractExpression {
@@ -29,7 +29,7 @@ public final class BinaryExpression implements AbstractExpression {
     }
 
     @Override
-    public Value valEval() {
+    public AbstractValue valEval() {
         float first = expr1.valEval().asNum();
         float second = expr2.valEval().asNum();
         switch (operation) {

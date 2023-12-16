@@ -3,7 +3,7 @@ package AST.Library.Funcs;
 import AST.Statements.ReturnStatement;
 import AST.Statements.AbstractStatement;
 import AST.Values.NumberValue;
-import AST.Values.Value;
+import AST.Values.AbstractValue;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public final class UserDefinedFunction implements Function {
     }
 
     @Override
-    public Value execute(Value... args) {
+    public AbstractValue execute(AbstractValue... args) {
         try {
             body.execute();
             return new NumberValue(0);

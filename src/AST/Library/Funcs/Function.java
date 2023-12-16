@@ -1,8 +1,8 @@
 package AST.Library.Funcs;
 
-import AST.Values.Value;
+import AST.Values.AbstractValue;
 
 public interface Function {
 
-    Value execute(Value... args);
+    AbstractValue execute(AbstractValue... args);
 }

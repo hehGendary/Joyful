@@ -1,7 +1,7 @@
 package AST.Expressions;
 
 import AST.Values.NumberValue;
-import AST.Values.Value;
+import AST.Values.AbstractValue;
 import Visitors.Visitor;
 
 public final class TripleExpression implements AbstractExpression {
@@ -30,7 +30,7 @@ public final class TripleExpression implements AbstractExpression {
     }
 
     @Override
-    public Value valEval() {
+    public AbstractValue valEval() {
         float first = expr1.valEval().asNum();
         float second = expr2.valEval().asNum();
         float third = expr3.valEval().asNum();

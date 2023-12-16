@@ -1,7 +1,7 @@
 package AST.Expressions;
 
 import AST.Values.ArrayValue;
-import AST.Values.Value;
+import AST.Values.AbstractValue;
 import Visitors.Visitor;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public final class ArrayExpression implements AbstractExpression {
     }
 
     @Override
-    public Value valEval() {
+    public AbstractValue valEval() {
         final int size = elements.size();
         final ArrayValue array = new ArrayValue(size);
         for (int i = 0; i < size; i++) {

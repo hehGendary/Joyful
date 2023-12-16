@@ -4,7 +4,7 @@ import AST.Library.Funcs.Function;
 import AST.Library.Funcs.Functions;
 import AST.Library.Funcs.UserDefinedFunction;
 import AST.Library.Variables.Variables;
-import AST.Values.Value;
+import AST.Values.AbstractValue;
 import Visitors.Visitor;
 
 import java.util.ArrayList;
@@ -30,9 +30,9 @@ public final class FunctionalExpression implements AbstractExpression {
     }
 
     @Override
-    public Value valEval() {
+    public AbstractValue valEval() {
         final int size = arguments.size();
-        final Value[] values = new Value[size];
+        final AbstractValue[] values = new AbstractValue[size];
         for (int i = 0; i < size; i++) {
             values[i] = arguments.get(i).valEval();
         }
@@ -46,7 +46,7 @@ public final class FunctionalExpression implements AbstractExpression {
             for (int i = 0; i < size; i++) {
                 Variables.set(userFunction.getArgsName(i), values[i]);
             }
-            final Value result = userFunction.execute(values);
+            final AbstractValue result = userFunction.execute(values);
             Variables.pop();
             return result;
         }

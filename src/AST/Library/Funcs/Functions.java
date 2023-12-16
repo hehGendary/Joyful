@@ -1,9 +1,8 @@
 package AST.Library.Funcs;
-import AST.Library.Funcs.Function;
 import AST.Values.ArrayValue;
 import AST.Values.NumberValue;
 import AST.Values.StringValue;
-import AST.Values.Value;
+import AST.Values.AbstractValue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,50 +17,50 @@ public final class Functions {
         functions.put("sin",    new Function() {
 
             @Override
-            public Value execute(Value... args) {
+            public AbstractValue execute(AbstractValue... args) {
                 if (args.length != 1) throw new RuntimeException("One arg expected");
                 return new NumberValue(Math.sin(args[0].asNum()));
             }
         });
-        functions.put("cos", (Function) (Value... args) -> {
+        functions.put("cos", (Function) (AbstractValue... args) -> {
             if (args.length != 1) throw new RuntimeException("One arg expected");
             return new NumberValue(Math.cos(args[0].asNum()));
         });
-        functions.put("array", (Function) (Value... args) -> {
+        functions.put("array", (Function) (AbstractValue... args) -> {
             if (args.length != 1) throw new RuntimeException("One arg expected");
             return new ArrayValue((int)args[0].asNum());
         });
-        functions.put("arrlen", (Function) (Value... args) -> {
+        functions.put("arrlen", (Function) (AbstractValue... args) -> {
             if (args.length != 1) throw new RuntimeException("One arg expected");
             return new NumberValue(args[0].arrLen());
         });
 
-        functions.put("strlen", (Function) (Value... args) -> {
+        functions.put("strlen", (Function) (AbstractValue... args) -> {
             if (args.length != 1) throw new RuntimeException("One arg expected");
             return new NumberValue(args[0].asStr().length());
         });
 
-        functions.put("char", (Function) (Value... args) -> {
+        functions.put("char", (Function) (AbstractValue... args) -> {
             if (args.length != 2) throw new RuntimeException("");
             return new StringValue(String.format("%c", args[0].asStr().charAt((int)args[1].asNum())));
         });
 
-        functions.put("numToChar", (Function) (Value... args) -> {
+        functions.put("numToChar", (Function) (AbstractValue... args) -> {
             if (args.length != 1) throw new RuntimeException("");
             return new StringValue(String.format("%c", (char)args[0].asNum()));
         });
 
-        functions.put("stringToNum", (Function) (Value... args) -> {
+        functions.put("stringToNum", (Function) (AbstractValue... args) -> {
             if (args.length != 1) throw new RuntimeException("");
             return new NumberValue(Double.parseDouble(args[0].asStr()));
         });
 
-        functions.put("addStr", (Function) (Value... args) -> {
+        functions.put("addStr", (Function) (AbstractValue... args) -> {
             if (args.length != 2) throw new RuntimeException("");
             return new StringValue(args[0].asStr() + args[1].asStr());
         });
 
-        functions.put("input", (Function) (Value... args) -> {
+        functions.put("input", (Function) (AbstractValue... args) -> {
             if (args.length != 1) throw new RuntimeException("");
             Scanner sc = new Scanner(System.in);
             System.out.print(args[0].asStr());
@@ -69,13 +68,13 @@ public final class Functions {
         });
 
         functions.put("println", args -> {
-            for (Value arg : args) {
+            for (AbstractValue arg : args) {
                 System.out.println(arg.asStr());
             }
             return new NumberValue(0);
         });
         functions.put("print", args -> {
-            for (Value arg : args) {
+            for (AbstractValue arg : args) {
                 System.out.print(arg.asStr());
             }
             return new NumberValue(0);
