@@ -2,6 +2,7 @@
 import AST.Statements.Statement;
 import Visitors.AssignValidator;
 import Visitors.FunctionAdder;
+import Visitors.Optimize.Optimizer;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -55,8 +56,12 @@ public class Main {
 
             List<Token> tokens = new Lexer(input).tokenize();
             Statement program = new Parser(tokens).parse();
+
+            program = Optimizer.optimize(program, 20, false);
+
             program.accept(new FunctionAdder());
             program.accept(new AssignValidator());
+
             program.execute();
         }
     }
