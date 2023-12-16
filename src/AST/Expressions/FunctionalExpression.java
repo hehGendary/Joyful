@@ -5,7 +5,7 @@ import AST.Library.Functions;
 import AST.Library.UserDefinedFunction;
 import AST.Library.Variables;
 import AST.Values.Value;
-import AST.Visitors.Visitor;
+import Visitors.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 public final class FunctionalExpression implements Expression {
 
     private final String name;
-    private final List<Expression> arguments;
+    public final List<Expression> arguments;
 
     public FunctionalExpression(String name) {
         this.name = name;

@@ -1,4 +1,4 @@
-package AST.Visitors;
+package Visitors;
 
 import AST.Expressions.*;
 import AST.Statements.*;

@@ -1,12 +1,12 @@
 package AST.Statements;
 
 import AST.Expressions.Expression;
-import AST.Visitors.Visitor;
+import Visitors.Visitor;
 
 public final class ifElseStatement implements Statement {
 
-    private final Expression expression;
-    private final Statement ifStatement, elseStatement;
+    public final Expression expression;
+    public final Statement ifStatement, elseStatement;
 
     public ifElseStatement(Expression expression, Statement ifStatement, Statement elseStatement) {
         this.expression = expression;

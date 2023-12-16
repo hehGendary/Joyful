@@ -4,13 +4,13 @@ import AST.Expressions.Expression;
 import AST.Library.Variables;
 import AST.Values.ArrayValue;
 import AST.Values.Value;
-import AST.Visitors.Visitor;
+import Visitors.Visitor;
 
 public final class ArrayAssignmentStatement implements Statement {
 
     private final String variable;
     private final Expression index;
-    private final Expression expression;
+    public final Expression expression;
 
     public ArrayAssignmentStatement(String variable, Expression index, Expression expression) {
         this.variable = variable;

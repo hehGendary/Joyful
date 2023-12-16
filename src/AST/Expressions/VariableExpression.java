@@ -3,7 +3,7 @@ package AST.Expressions;
 
 import AST.Library.Variables;
 import AST.Values.Value;
-import AST.Visitors.Visitor;
+import Visitors.Visitor;
 
 public class VariableExpression implements Expression {
     private String tos(double dou) {

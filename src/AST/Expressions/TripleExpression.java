@@ -2,11 +2,11 @@ package AST.Expressions;
 
 import AST.Values.NumberValue;
 import AST.Values.Value;
-import AST.Visitors.Visitor;
+import Visitors.Visitor;
 
 public final class TripleExpression implements Expression {
 
-    private final Expression expr1, expr2, expr3;
+    public final Expression expr1, expr2, expr3;
     private final char operation;
 
     private double tod(String str) {

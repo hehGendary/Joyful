@@ -3,7 +3,7 @@ package AST.Expressions;
 import AST.Values.NumberValue;
 import AST.Values.StringValue;
 import AST.Values.Value;
-import AST.Visitors.Visitor;
+import Visitors.Visitor;
 
 public final class ValueExpression implements Expression {
 

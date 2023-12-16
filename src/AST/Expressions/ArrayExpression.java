@@ -2,7 +2,7 @@ package AST.Expressions;
 
 import AST.Values.ArrayValue;
 import AST.Values.Value;
-import AST.Visitors.Visitor;
+import Visitors.Visitor;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
 package AST.Statements;
 
 import AST.Expressions.FunctionalExpression;
-import AST.Visitors.Visitor;
+import Visitors.Visitor;
 
 public final class FunctionStatement implements Statement {
 
-    private final FunctionalExpression function;
+    public final FunctionalExpression function;
 
     public FunctionStatement(FunctionalExpression function) {
         this.function = function;

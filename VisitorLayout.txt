@@ -1,0 +1,78 @@
+package Visitors;
+
+import AST.Expressions.*;
+import AST.Statements.*;
+
+public class La extends AbstractVisitor {
+    public void visit(ArrayAccessExpression s) {
+
+    }
+
+    public void visit(ArrayExpression s) {
+
+    }
+
+    public void visit(BinaryExpression s) {
+
+    }
+
+    public void visit(FunctionalExpression s) {
+
+    }
+
+    public void visit(TripleExpression s) {
+
+    }
+
+    public void visit(UnaryExpression s) {
+
+    }
+
+    public void visit(ValueExpression s) {
+
+    }
+
+    public void visit(VariableExpression s) {
+
+    }
+
+    public void visit(ArrayAssignmentStatement s) {
+
+    }
+
+    public void visit(BlockStatement s) {
+
+    }
+
+    public void visit(ForStatement s) {
+
+    }
+
+    public void visit(FunctionStatement s) {
+
+    }
+
+    public void visit(ifElseStatement s) {
+
+    }
+
+    public void visit(makeVariableStatement s) {
+
+    }
+
+    public void visit(PrintStatement s) {
+
+    }
+
+    public void visit(ReturnStatement s) {
+
+    }
+
+    public void visit(WhileStatement s) {
+
+    }
+
+    @Override
+    public void visit(FunctionDefineStatement s) {;
+    }
+}

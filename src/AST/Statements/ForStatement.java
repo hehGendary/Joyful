@@ -1,15 +1,14 @@
 package AST.Statements;
 
 import AST.Expressions.Expression;
-import AST.Values.*;
-import AST.Visitors.Visitor;
+import Visitors.Visitor;
 
 public final class ForStatement implements Statement {
 
-    private final Statement initialization;
-    private final Expression termination;
-    private final Statement increment;
-    private final Statement statement;
+    public final Statement initialization;
+    public final Expression termination;
+    public final Statement increment;
+    public final Statement statement;
 
     public ForStatement(Statement initialization, Expression termination, Statement increment, Statement block) {
         this.initialization = initialization;

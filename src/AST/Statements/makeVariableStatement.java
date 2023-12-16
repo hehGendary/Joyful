@@ -4,7 +4,7 @@ import AST.Expressions.Expression;
 import AST.Library.Variables;
 import AST.Values.NumberValue;
 import AST.Values.Value;
-import AST.Visitors.Visitor;
+import Visitors.Visitor;
 
 public final class makeVariableStatement implements Statement {
 
@@ -15,8 +15,8 @@ public final class makeVariableStatement implements Statement {
     private String tos(double dou) {
         return String.valueOf(dou);
     }
-    private final String variable;
-    private final Expression expression;
+    public final String variable;
+    public final Expression expression;
 
     public makeVariableStatement(String variable, Expression expression) {
         this.variable = variable;

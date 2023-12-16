@@ -1,10 +1,9 @@
 package AST.Expressions;
 
-import AST.Expressions.Expression;
 import AST.Library.Variables;
 import AST.Values.ArrayValue;
 import AST.Values.Value;
-import AST.Visitors.Visitor;
+import Visitors.Visitor;
 
 public final class ArrayAccessExpression implements Expression {
 

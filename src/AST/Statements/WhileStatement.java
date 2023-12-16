@@ -1,12 +1,11 @@
 package AST.Statements;
-import AST.*;
 import AST.Expressions.Expression;
-import AST.Visitors.Visitor;
+import Visitors.Visitor;
 
 public final class WhileStatement implements Statement {
 
-    private final Expression condition;
-    private final Statement statement;
+    public final Expression condition;
+    public final Statement statement;
 
     public WhileStatement(Expression condition, Statement statement) {
         this.condition = condition;

@@ -1,10 +1,10 @@
 package AST.Statements;
 
 import AST.Expressions.Expression;
-import AST.Visitors.Visitor;
+import Visitors.Visitor;
 
 public class PrintStatement implements Statement {
-    Expression expr;
+    public Expression expr;
 
     public PrintStatement(Expression expr) {
         this.expr = expr;

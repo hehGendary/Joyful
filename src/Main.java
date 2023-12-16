@@ -1,5 +1,7 @@
 
 import AST.Statements.Statement;
+import Visitors.AssignValidator;
+import Visitors.FunctionAdder;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -56,6 +58,8 @@ public class Main {
                 //System.out.println(token.toString());
             }
             Statement parser = new Parser(tokens).parse();
+            parser.accept(new FunctionAdder());
+            parser.accept(new AssignValidator());
             parser.execute();
         }
     }
