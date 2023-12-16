@@ -2,11 +2,12 @@ package AST.Expressions;
 
 import AST.Values.NumberValue;
 import AST.Values.AbstractValue;
+import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
-public final class TripleExpression implements AbstractExpression {
+public final class TripleExpression implements Expression {
 
-    public final AbstractExpression expr1, expr2, expr3;
+    public final Expression expr1, expr2, expr3;
     private final char operation;
 
     private double tod(String str) {
@@ -17,7 +18,7 @@ public final class TripleExpression implements AbstractExpression {
         return String.valueOf(dou);
     }
 
-    public TripleExpression(char operation, AbstractExpression expr1, AbstractExpression expr2, AbstractExpression expr3) {
+    public TripleExpression(char operation, Expression expr1, Expression expr2, Expression expr3) {
         this.operation = operation;
         this.expr1 = expr1;
         this.expr2 = expr2;
@@ -47,5 +48,10 @@ public final class TripleExpression implements AbstractExpression {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {
+        return visitor.visit(this, input);
     }
 }

@@ -1,18 +1,19 @@
 package AST.Statements;
 
-import AST.Expressions.AbstractExpression;
+import AST.Expressions.Expression;
 import AST.Library.Variables.Variables;
 import AST.Values.ArrayValue;
 import AST.Values.AbstractValue;
+import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
-public final class ArrayAssignmentStatement implements AbstractStatement {
+public final class ArrayAssignmentStatement implements Statement {
 
     private final String variable;
-    private final AbstractExpression index;
-    public final AbstractExpression expression;
+    private final Expression index;
+    public final Expression expression;
 
-    public ArrayAssignmentStatement(String variable, AbstractExpression index, AbstractExpression expression) {
+    public ArrayAssignmentStatement(String variable, Expression index, Expression expression) {
         this.variable = variable;
         this.index = index;
         this.expression = expression;
@@ -37,5 +38,10 @@ public final class ArrayAssignmentStatement implements AbstractStatement {
     @Override
     public String toString() {
         return String.format("%s[%s] = %s", variable, index, expression);
+    }
+
+    @Override
+    public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {
+        return visitor.visit(this, input);
     }
 }

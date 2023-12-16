@@ -1,12 +1,13 @@
 package AST.Statements;
 
-import AST.Expressions.AbstractExpression;
+import AST.Expressions.Expression;
+import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
-public class PrintStatement implements AbstractStatement {
-    public AbstractExpression expr;
+public class PrintStatement implements Statement {
+    public Expression expr;
 
-    public PrintStatement(AbstractExpression expr) {
+    public PrintStatement(Expression expr) {
         this.expr = expr;
     }
 
@@ -17,5 +18,10 @@ public class PrintStatement implements AbstractStatement {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {
+        return visitor.visit(this, input);
     }
 }

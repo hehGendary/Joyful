@@ -1,14 +1,15 @@
 package AST.Statements;
 
-import AST.Expressions.AbstractExpression;
+import AST.Expressions.Expression;
+import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
-public final class ifElseStatement implements AbstractStatement {
+public final class ifElseStatement implements Statement {
 
-    public final AbstractExpression expression;
-    public final AbstractStatement ifStatement, elseStatement;
+    public final Expression expression;
+    public final Statement ifStatement, elseStatement;
 
-    public ifElseStatement(AbstractExpression expression, AbstractStatement ifStatement, AbstractStatement elseStatement) {
+    public ifElseStatement(Expression expression, Statement ifStatement, Statement elseStatement) {
         this.expression = expression;
         this.ifStatement = ifStatement;
         this.elseStatement = elseStatement;
@@ -37,5 +38,10 @@ public final class ifElseStatement implements AbstractStatement {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {
+        return visitor.visit(this, input);
     }
 }

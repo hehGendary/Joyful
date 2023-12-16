@@ -3,9 +3,10 @@ package AST.Expressions;
 import AST.Values.NumberValue;
 import AST.Values.StringValue;
 import AST.Values.AbstractValue;
+import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
-public final class ValueExpression implements AbstractExpression {
+public final class ValueExpression implements Expression {
 
     public final AbstractValue value;
 
@@ -38,5 +39,10 @@ public final class ValueExpression implements AbstractExpression {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {
+        return visitor.visit(this, input);
     }
 }

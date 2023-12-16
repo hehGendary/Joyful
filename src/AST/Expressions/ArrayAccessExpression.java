@@ -3,15 +3,16 @@ package AST.Expressions;
 import AST.Library.Variables.Variables;
 import AST.Values.ArrayValue;
 import AST.Values.AbstractValue;
+import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
-public final class ArrayAccessExpression implements AbstractExpression {
+public final class ArrayAccessExpression implements Expression {
 
     private final String variable;
-    private final AbstractExpression index;
+    private final Expression index;
 
 
-    public ArrayAccessExpression(String variable, AbstractExpression index) {
+    public ArrayAccessExpression(String variable, Expression index) {
         this.variable = variable;
         this.index = index;
     }
@@ -35,6 +36,11 @@ public final class ArrayAccessExpression implements AbstractExpression {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {
+        return visitor.visit(this, input);
     }
 
 }

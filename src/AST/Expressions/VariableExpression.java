@@ -3,9 +3,10 @@ package AST.Expressions;
 
 import AST.Library.Variables.Variables;
 import AST.Values.AbstractValue;
+import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
-public class VariableExpression implements AbstractExpression {
+public class VariableExpression implements Expression {
     private String tos(double dou) {
         return String.valueOf(dou);
     }
@@ -35,5 +36,10 @@ public class VariableExpression implements AbstractExpression {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {
+        return visitor.visit(this, input);
     }
 }

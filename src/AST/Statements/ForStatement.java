@@ -1,16 +1,17 @@
 package AST.Statements;
 
-import AST.Expressions.AbstractExpression;
+import AST.Expressions.Expression;
+import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
-public final class ForStatement implements AbstractStatement {
+public final class ForStatement implements Statement {
 
-    public final AbstractStatement initialization;
-    public final AbstractExpression termination;
-    public final AbstractStatement increment;
-    public final AbstractStatement statement;
+    public final Statement initialization;
+    public final Expression termination;
+    public final Statement increment;
+    public final Statement statement;
 
-    public ForStatement(AbstractStatement initialization, AbstractExpression termination, AbstractStatement increment, AbstractStatement block) {
+    public ForStatement(Statement initialization, Expression termination, Statement increment, Statement block) {
         this.initialization = initialization;
         this.termination = termination;
         this.increment = increment;
@@ -32,5 +33,10 @@ public final class ForStatement implements AbstractStatement {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {
+        return visitor.visit(this, input);
     }
 }

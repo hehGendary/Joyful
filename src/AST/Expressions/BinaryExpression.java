@@ -2,12 +2,13 @@ package AST.Expressions;
 
 import AST.Values.NumberValue;
 import AST.Values.AbstractValue;
+import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
-public final class BinaryExpression implements AbstractExpression {
+public final class BinaryExpression implements Expression {
 
-    public final AbstractExpression expr1, expr2;
-    private final char operation;
+    public final Expression expr1, expr2;
+    public final char operation;
 
     private double tod(String str) {
         return Double.parseDouble(str.replace(',', '.'));
@@ -17,7 +18,7 @@ public final class BinaryExpression implements AbstractExpression {
         return String.valueOf(dou);
     }
 
-    public BinaryExpression(char operation, AbstractExpression expr1, AbstractExpression expr2) {
+    public BinaryExpression(char operation, Expression expr1, Expression expr2) {
         this.operation = operation;
         this.expr1 = expr1;
         this.expr2 = expr2;
@@ -57,5 +58,10 @@ public final class BinaryExpression implements AbstractExpression {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {
+        return visitor.visit(this, input);
     }
 }

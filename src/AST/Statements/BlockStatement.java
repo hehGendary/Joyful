@@ -1,24 +1,25 @@
 package AST.Statements;
 
+import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockStatement implements AbstractStatement {
-    public List<AbstractStatement> statements;
+public class BlockStatement implements Statement {
+    public List<Statement> statements;
 
     public BlockStatement() {
         statements = new ArrayList<>();
     }
 
-    public void add(AbstractStatement st) {
+    public void add(Statement st) {
         statements.add(st);
     }
 
     @Override
     public void execute() {
-        for (AbstractStatement st : statements) {
+        for (Statement st : statements) {
             st.execute();
         }
     }
@@ -26,5 +27,10 @@ public class BlockStatement implements AbstractStatement {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {
+        return visitor.visit(this, input);
     }
 }

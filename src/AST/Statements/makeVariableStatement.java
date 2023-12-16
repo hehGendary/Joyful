@@ -1,12 +1,13 @@
 package AST.Statements;
 
-import AST.Expressions.AbstractExpression;
+import AST.Expressions.Expression;
 import AST.Library.Variables.Variables;
 import AST.Values.NumberValue;
 import AST.Values.AbstractValue;
+import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
-public final class makeVariableStatement implements AbstractStatement {
+public final class makeVariableStatement implements Statement {
 
     private double tod(String str) {
         return Double.parseDouble(str.replace(',', '.'));
@@ -16,9 +17,9 @@ public final class makeVariableStatement implements AbstractStatement {
         return String.valueOf(dou);
     }
     public final String variable;
-    public final AbstractExpression expression;
+    public final Expression expression;
 
-    public makeVariableStatement(String variable, AbstractExpression expression) {
+    public makeVariableStatement(String variable, Expression expression) {
         this.variable = variable;
         this.expression = expression;
     }
@@ -39,5 +40,10 @@ public final class makeVariableStatement implements AbstractStatement {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {
+        return visitor.visit(this, input);
     }
 }

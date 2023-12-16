@@ -1,7 +1,7 @@
 package AST.Library.Funcs;
 
 import AST.Statements.ReturnStatement;
-import AST.Statements.AbstractStatement;
+import AST.Statements.Statement;
 import AST.Values.NumberValue;
 import AST.Values.AbstractValue;
 
@@ -10,9 +10,9 @@ import java.util.List;
 public final class UserDefinedFunction implements Function {
 
     private final List<String> argNames;
-    private final AbstractStatement body;
+    private final Statement body;
 
-    public UserDefinedFunction(List<String> argNames, AbstractStatement body) {
+    public UserDefinedFunction(List<String> argNames, Statement body) {
         this.argNames = argNames;
         this.body = body;
     }

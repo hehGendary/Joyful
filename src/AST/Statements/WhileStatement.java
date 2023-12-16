@@ -1,13 +1,14 @@
 package AST.Statements;
-import AST.Expressions.AbstractExpression;
+import AST.Expressions.Expression;
+import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
-public final class WhileStatement implements AbstractStatement {
+public final class WhileStatement implements Statement {
 
-    public final AbstractExpression condition;
-    public final AbstractStatement statement;
+    public final Expression condition;
+    public final Statement statement;
 
-    public WhileStatement(AbstractExpression condition, AbstractStatement statement) {
+    public WhileStatement(Expression condition, Statement statement) {
         this.condition = condition;
         this.statement = statement;
     }
@@ -27,5 +28,10 @@ public final class WhileStatement implements AbstractStatement {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {
+        return visitor.visit(this, input);
     }
 }

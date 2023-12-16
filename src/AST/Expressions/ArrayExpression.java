@@ -2,15 +2,16 @@ package AST.Expressions;
 
 import AST.Values.ArrayValue;
 import AST.Values.AbstractValue;
+import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
 import java.util.List;
 
-public final class ArrayExpression implements AbstractExpression {
+public final class ArrayExpression implements Expression {
 
-    private final List<AbstractExpression> elements;
+    public final List<Expression> elements;
 
-    public ArrayExpression(List<AbstractExpression> arguments) {
+    public ArrayExpression(List<Expression> arguments) {
         this.elements = arguments;
     }
 
@@ -32,5 +33,10 @@ public final class ArrayExpression implements AbstractExpression {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {
+        return visitor.visit(this, input);
     }
 }

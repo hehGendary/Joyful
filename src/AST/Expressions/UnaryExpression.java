@@ -2,18 +2,19 @@ package AST.Expressions;
 
 import AST.Values.NumberValue;
 import AST.Values.AbstractValue;
+import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
-public final class UnaryExpression implements AbstractExpression {
+public final class UnaryExpression implements Expression {
 
-    public final AbstractExpression expr1;
-    private final char operation;
+    public final Expression expr1;
+    public final char operation;
 
     private double tod(String str) {
         return Double.parseDouble(str.replace(',', '.'));
     }
 
-    public UnaryExpression(char operation, AbstractExpression expr1) {
+    public UnaryExpression(char operation, Expression expr1) {
         this.operation = operation;
         this.expr1 = expr1;
     }
@@ -49,5 +50,10 @@ public final class UnaryExpression implements AbstractExpression {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {
+        return visitor.visit(this, input);
     }
 }

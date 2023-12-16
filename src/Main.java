@@ -1,5 +1,5 @@
 
-import AST.Statements.AbstractStatement;
+import AST.Statements.Statement;
 import Visitors.AssignValidator;
 import Visitors.FunctionAdder;
 
@@ -54,7 +54,7 @@ public class Main {
             }
 
             List<Token> tokens = new Lexer(input).tokenize();
-            AbstractStatement program = new Parser(tokens).parse();
+            Statement program = new Parser(tokens).parse();
             program.accept(new FunctionAdder());
             program.accept(new AssignValidator());
             program.execute();

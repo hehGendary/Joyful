@@ -2,17 +2,18 @@ package AST.Statements;
 
 import AST.Library.Funcs.Functions;
 import AST.Library.Funcs.UserDefinedFunction;
+import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
 import java.util.List;
 
-public final class FunctionDefineStatement implements AbstractStatement {
+public final class FunctionDefineStatement implements Statement {
 
     private final String name;
     private final List<String> argNames;
-    public final AbstractStatement body;
+    public final Statement body;
 
-    public FunctionDefineStatement(String name, List<String> argNames, AbstractStatement body) {
+    public FunctionDefineStatement(String name, List<String> argNames, Statement body) {
         this.name = name;
         this.argNames = argNames;
         this.body = body;
@@ -31,6 +32,11 @@ public final class FunctionDefineStatement implements AbstractStatement {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public <R, T> R accept(ResultVisitor<R, T> visitor, T input) {
+        return visitor.visit(this, input);
     }
 }
 
