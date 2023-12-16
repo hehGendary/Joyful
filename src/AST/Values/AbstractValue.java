@@ -1,6 +1,6 @@
 package AST.Values;
 
-public interface Value {
+public interface AbstractValue {
     float asNum();
     double asDouble();
 

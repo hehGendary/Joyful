@@ -56,7 +56,7 @@ public abstract class AbstractVisitor implements Visitor {
     public void visit(ifElseStatement s) {
         s.expression.accept(this);
         s.ifStatement.accept(this);
-        s.elseStatement.accept(this);
+        if (s.elseStatement != null) s.elseStatement.accept(this);
     }
     public void visit(makeVariableStatement s) {
         s.expression.accept(this);

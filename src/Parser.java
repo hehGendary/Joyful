@@ -4,6 +4,7 @@ import AST.Statements.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public final class Parser {
 
@@ -53,7 +54,7 @@ public final class Parser {
         if (match("RETURN")) {
             return new ReturnStatement(getExpr());
         }
-        if (get(0).type == "WORD" && get(1).type == "LPAR") {
+        if (Objects.equals(get(0).type, "WORD") && Objects.equals(get(1).type, "LPAR")) {
             return new FunctionStatement(function());
         }
         return makeStatement();
@@ -79,13 +80,13 @@ public final class Parser {
 
     private AbstractStatement makeStatement() {
         Token current = get(0);
-        if (get(0).type == "WORD" && get(1).type == "MAKEEQUALS") {
+        if (Objects.equals(get(0).type, "WORD") && Objects.equals(get(1).type, "MAKEEQUALS")) {
             final String variable = current.text;
             consume("WORD");
             consume("MAKEEQUALS");
             return new makeVariableStatement(variable, getExpr());
         }
-        if (get(0).type == "WORD" && get(1).type == "LBRACKET") {
+        if (Objects.equals(get(0).type, "WORD") && Objects.equals(get(1).type, "LBRACKET")) {
             final String variable = get(0).text;
             consume("WORD");
             consume("LBRACKET");
@@ -96,7 +97,7 @@ public final class Parser {
         }
         consume("WORD");
         throw new JFExpection("Unknown statement",
-                String.format("line: , char: "));
+                "line: , char: ");
     }
 
     private FunctionDefineStatement functionDefine() {
@@ -160,7 +161,7 @@ public final class Parser {
     }
 
     private AbstractStatement blOrSt() {
-        if (get(0).type == "LBRACE") return block();
+        if (Objects.equals(get(0).type, "LBRACE")) return block();
         return getStatement();
     }
 
@@ -187,7 +188,6 @@ public final class Parser {
         while (true) {
             if (match("|")) {
                 result = new BinaryExpression('|', result, AndExpr());
-                continue;
             } else {
                 break;
             }
@@ -202,7 +202,6 @@ public final class Parser {
         while (true) {
             if (match("&")) {
                 result = new BinaryExpression('&', result, condExpr());
-                continue;
             } else {
                 break;
             }
@@ -245,7 +244,6 @@ public final class Parser {
 
             if (match("+") || match("-")) {
                 result = new BinaryExpression(current.charAt(0), result, mulDivExpr());
-                continue;
             } else {
                 break;
             }
@@ -262,7 +260,6 @@ public final class Parser {
 
             if (match("*") || match("/")) {
                 result = new BinaryExpression(current.charAt(0), result, unary());
-                continue;
             } else {
                 break;
             }
@@ -283,10 +280,10 @@ public final class Parser {
 
     private AbstractExpression primary() {
         final Token current = get(0);
-        if (get(0).type == "OPENTREE") {
+        if (Objects.equals(get(0).type, "OPENTREE")) {
             return array();
         }
-        if (get(0).type == "WORD" && get(1).type == "LBRACKET") {
+        if (Objects.equals(get(0).type, "WORD") && Objects.equals(get(1).type, "LBRACKET")) {
             return element();
         }
         if (match("NUMBER")) {
@@ -300,7 +297,7 @@ public final class Parser {
             match("RPAR");
             return result;
         }
-        if (get(0).type == "WORD" && get(1).type == "LPAR") {
+        if (Objects.equals(get(0).type, "WORD") && Objects.equals(get(1).type, "LPAR")) {
             return function();
         }
         if (match("WORD"))  {
@@ -319,7 +316,7 @@ public final class Parser {
     }
     private boolean match(String type) {
         final Token current = get(0);
-        if (type != current.type) return false;
+        if (!Objects.equals(type, current.type)) return false;
         pos++;
         return true;
     }
