@@ -1,4 +1,5 @@
-package AST.Library;
+package AST.Library.Funcs;
+import AST.Library.Funcs.Function;
 import AST.Values.ArrayValue;
 import AST.Values.NumberValue;
 import AST.Values.StringValue;

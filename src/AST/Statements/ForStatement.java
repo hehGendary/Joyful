@@ -1,16 +1,16 @@
 package AST.Statements;
 
-import AST.Expressions.Expression;
+import AST.Expressions.AbstractExpression;
 import Visitors.Visitor;
 
-public final class ForStatement implements Statement {
+public final class ForStatement implements AbstractStatement {
 
-    public final Statement initialization;
-    public final Expression termination;
-    public final Statement increment;
-    public final Statement statement;
+    public final AbstractStatement initialization;
+    public final AbstractExpression termination;
+    public final AbstractStatement increment;
+    public final AbstractStatement statement;
 
-    public ForStatement(Statement initialization, Expression termination, Statement increment, Statement block) {
+    public ForStatement(AbstractStatement initialization, AbstractExpression termination, AbstractStatement increment, AbstractStatement block) {
         this.initialization = initialization;
         this.termination = termination;
         this.increment = increment;

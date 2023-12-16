@@ -15,7 +15,7 @@ public abstract class AbstractVisitor implements Visitor {
         s.expr2.accept(this);
     }
     public void visit(FunctionalExpression s) {
-        for (Expression e : s.arguments) {
+        for (AbstractExpression e : s.arguments) {
             e.accept(this);
         }
     }
@@ -37,7 +37,7 @@ public abstract class AbstractVisitor implements Visitor {
         s.expression.accept(this);
     }
     public void visit(BlockStatement s) {
-        for (Statement st : s.statements) {
+        for (AbstractStatement st : s.statements) {
             st.accept(this);
         }
     }

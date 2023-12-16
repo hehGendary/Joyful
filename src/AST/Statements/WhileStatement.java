@@ -1,13 +1,13 @@
 package AST.Statements;
-import AST.Expressions.Expression;
+import AST.Expressions.AbstractExpression;
 import Visitors.Visitor;
 
-public final class WhileStatement implements Statement {
+public final class WhileStatement implements AbstractStatement {
 
-    public final Expression condition;
-    public final Statement statement;
+    public final AbstractExpression condition;
+    public final AbstractStatement statement;
 
-    public WhileStatement(Expression condition, Statement statement) {
+    public WhileStatement(AbstractExpression condition, AbstractStatement statement) {
         this.condition = condition;
         this.statement = statement;
     }

@@ -4,9 +4,9 @@ import AST.Values.NumberValue;
 import AST.Values.Value;
 import Visitors.Visitor;
 
-public final class BinaryExpression implements Expression {
+public final class BinaryExpression implements AbstractExpression {
 
-    public final Expression expr1, expr2;
+    public final AbstractExpression expr1, expr2;
     private final char operation;
 
     private double tod(String str) {
@@ -17,7 +17,7 @@ public final class BinaryExpression implements Expression {
         return String.valueOf(dou);
     }
 
-    public BinaryExpression(char operation, Expression expr1, Expression expr2) {
+    public BinaryExpression(char operation, AbstractExpression expr1, AbstractExpression expr2) {
         this.operation = operation;
         this.expr1 = expr1;
         this.expr2 = expr2;

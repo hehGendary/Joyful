@@ -1,31 +1,31 @@
 package AST.Expressions;
 
-import AST.Library.Function;
-import AST.Library.Functions;
-import AST.Library.UserDefinedFunction;
-import AST.Library.Variables;
+import AST.Library.Funcs.Function;
+import AST.Library.Funcs.Functions;
+import AST.Library.Funcs.UserDefinedFunction;
+import AST.Library.Variables.Variables;
 import AST.Values.Value;
 import Visitors.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class FunctionalExpression implements Expression {
+public final class FunctionalExpression implements AbstractExpression {
 
     private final String name;
-    public final List<Expression> arguments;
+    public final List<AbstractExpression> arguments;
 
     public FunctionalExpression(String name) {
         this.name = name;
         arguments = new ArrayList<>();
     }
 
-    public FunctionalExpression(String name, List<Expression> arguments) {
+    public FunctionalExpression(String name, List<AbstractExpression> arguments) {
         this.name = name;
         this.arguments = arguments;
     }
 
-    public void addArgument(Expression arg) {
+    public void addArgument(AbstractExpression arg) {
         arguments.add(arg);
     }
 

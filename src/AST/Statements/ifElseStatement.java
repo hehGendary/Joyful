@@ -1,14 +1,14 @@
 package AST.Statements;
 
-import AST.Expressions.Expression;
+import AST.Expressions.AbstractExpression;
 import Visitors.Visitor;
 
-public final class ifElseStatement implements Statement {
+public final class ifElseStatement implements AbstractStatement {
 
-    public final Expression expression;
-    public final Statement ifStatement, elseStatement;
+    public final AbstractExpression expression;
+    public final AbstractStatement ifStatement, elseStatement;
 
-    public ifElseStatement(Expression expression, Statement ifStatement, Statement elseStatement) {
+    public ifElseStatement(AbstractExpression expression, AbstractStatement ifStatement, AbstractStatement elseStatement) {
         this.expression = expression;
         this.ifStatement = ifStatement;
         this.elseStatement = elseStatement;

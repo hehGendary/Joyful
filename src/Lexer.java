@@ -127,7 +127,6 @@ public final class Lexer {
 
         final String word = buffer.toString();
         switch (word) {
-            //case "print": addToken("PRINT"); break;
             case "if": addToken("IF"); break;
             case "else": addToken("ELSE"); break;
             case "for": addToken("FOR"); break;

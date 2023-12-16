@@ -3,7 +3,7 @@ package AST.Statements;
 import AST.Expressions.FunctionalExpression;
 import Visitors.Visitor;
 
-public final class FunctionStatement implements Statement {
+public final class FunctionStatement implements AbstractStatement {
 
     public final FunctionalExpression function;
 

@@ -5,7 +5,7 @@ import AST.Values.StringValue;
 import AST.Values.Value;
 import Visitors.Visitor;
 
-public final class ValueExpression implements Expression {
+public final class ValueExpression implements AbstractExpression {
 
     public final Value value;
 

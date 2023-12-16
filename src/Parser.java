@@ -19,7 +19,7 @@ public final class Parser {
         size = tokens.size();
     }
 
-    public Statement parse() {
+    public AbstractStatement parse() {
         final BlockStatement result = new BlockStatement();
         while (!match("EOF")) {
             result.add(getStatement());
@@ -27,12 +27,12 @@ public final class Parser {
         return result;
     }
 
-    private Statement getStatement() {
+    private AbstractStatement getStatement() {
         if (match("PRINT")) {
             if (!match("LPAR")) throw new
                     JFExpection("Syntax",
                     String.format("Unknown token! Line %d, Char %d", get(0).line, get(0).ch));
-            Expression printExpr = getExpr();
+            AbstractExpression printExpr = getExpr();
             if (!match("RPAR")) throw new
                     JFExpection("Syntax",
                     String.format("Unknown token! Line %d, Char %d", get(0).line, get(0).ch));
@@ -59,25 +59,25 @@ public final class Parser {
         return makeStatement();
     }
 
-    private Statement whileSt() {
-        final Expression condition = getExpr();
-        final Statement statement = blOrSt();
+    private AbstractStatement whileSt() {
+        final AbstractExpression condition = getExpr();
+        final AbstractStatement statement = blOrSt();
         return new WhileStatement(condition, statement);
     }
 
-    private Statement forSt() {
+    private AbstractStatement forSt() {
         consume("LPAR");
-        Statement init = makeStatement();
+        AbstractStatement init = makeStatement();
         consume("COMMA");
-        Expression term = getExpr();
+        AbstractExpression term = getExpr();
         consume("COMMA");
-        Statement incr = makeStatement();
+        AbstractStatement incr = makeStatement();
         consume("RPAR");
-        Statement st = blOrSt();
+        AbstractStatement st = blOrSt();
         return new ForStatement(init, term, incr, st);
     }
 
-    private Statement makeStatement() {
+    private AbstractStatement makeStatement() {
         Token current = get(0);
         if (get(0).type == "WORD" && get(1).type == "MAKEEQUALS") {
             final String variable = current.text;
@@ -89,7 +89,7 @@ public final class Parser {
             final String variable = get(0).text;
             consume("WORD");
             consume("LBRACKET");
-            final Expression index = getExpr();
+            final AbstractExpression index = getExpr();
             consume("RBRACKET");
             consume("MAKEEQUALS");
             return new ArrayAssignmentStatement(variable, index, getExpr());
@@ -110,7 +110,7 @@ public final class Parser {
             match(get(0).type);
             match("COMMA");
         }
-        final Statement body = blOrSt();
+        final AbstractStatement body = blOrSt();
         return new FunctionDefineStatement(name, argNames, body);
     }
 
@@ -129,9 +129,9 @@ public final class Parser {
         return function;
     }
 
-    private Expression array() {
+    private AbstractExpression array() {
         consume("OPENTREE");
-        final List<Expression> elements = new ArrayList<>();
+        final List<AbstractExpression> elements = new ArrayList<>();
         while (!match("CLOSETREE")) {
             elements.add(getExpr());
             if (!match("COMMA")) {
@@ -142,15 +142,15 @@ public final class Parser {
         return new ArrayExpression(elements);
     }
 
-    private Expression element() {
+    private AbstractExpression element() {
         final String variable = get(0).text;
         consume("WORD");
         consume("LBRACKET");
-        final Expression index = getExpr();
+        final AbstractExpression index = getExpr();
         consume("RBRACKET");
         return new ArrayAccessExpression(variable, index);
     }
-    private Statement block() {
+    private AbstractStatement block() {
         BlockStatement st = new BlockStatement();
         consume("LBRACE");
         while (!match("RBRACE")) {
@@ -159,17 +159,17 @@ public final class Parser {
         return st;
     }
 
-    private Statement blOrSt() {
+    private AbstractStatement blOrSt() {
         if (get(0).type == "LBRACE") return block();
         return getStatement();
     }
 
-    private Statement ifElse() {
+    private AbstractStatement ifElse() {
         consume("LPAR");
-        Expression cond = getExpr();
+        AbstractExpression cond = getExpr();
         consume("RPAR");
-        Statement ifSt = blOrSt();
-        Statement elseSt;
+        AbstractStatement ifSt = blOrSt();
+        AbstractStatement elseSt;
         if (match("ELSE")) {
             elseSt = blOrSt();
         } else {
@@ -177,12 +177,12 @@ public final class Parser {
         }
         return new ifElseStatement(cond, ifSt, elseSt);
     }
-    private Expression getExpr() {
+    private AbstractExpression getExpr() {
         return OrExpr();
     }
 
-    private Expression OrExpr() {
-        Expression result = AndExpr();
+    private AbstractExpression OrExpr() {
+        AbstractExpression result = AndExpr();
 
         while (true) {
             if (match("|")) {
@@ -196,8 +196,8 @@ public final class Parser {
         return result;
     }
 
-    private Expression AndExpr() {
-        Expression result = condExpr();
+    private AbstractExpression AndExpr() {
+        AbstractExpression result = condExpr();
 
         while (true) {
             if (match("&")) {
@@ -211,8 +211,8 @@ public final class Parser {
         return result;
     }
 
-    private Expression condExpr() {
-        Expression result = plusMinusExpr();
+    private AbstractExpression condExpr() {
+        AbstractExpression result = plusMinusExpr();
 
         while (true) {
             if (match("==")) {
@@ -237,8 +237,8 @@ public final class Parser {
         return result;
     }
 
-    private Expression plusMinusExpr() {
-        Expression result = mulDivExpr();
+    private AbstractExpression plusMinusExpr() {
+        AbstractExpression result = mulDivExpr();
 
         while (true) {
             String current = get(0).type;
@@ -254,8 +254,8 @@ public final class Parser {
         return result;
     }
 
-    private Expression mulDivExpr() {
-        Expression result = unary();
+    private AbstractExpression mulDivExpr() {
+        AbstractExpression result = unary();
 
         while (true) {
             String current = get(0).type;
@@ -271,7 +271,7 @@ public final class Parser {
         return result;
     }
 
-    private Expression unary() {
+    private AbstractExpression unary() {
         if (match("-")) {
             return new UnaryExpression('-', primary());
         }
@@ -281,7 +281,7 @@ public final class Parser {
         return primary();
     }
 
-    private Expression primary() {
+    private AbstractExpression primary() {
         final Token current = get(0);
         if (get(0).type == "OPENTREE") {
             return array();
@@ -296,7 +296,7 @@ public final class Parser {
             return new ValueExpression(current.text);
         }
         if (match("LPAR")) {
-            Expression result = getExpr();
+            AbstractExpression result = getExpr();
             match("RPAR");
             return result;
         }

@@ -1,4 +1,4 @@
-package AST.Library;
+package AST.Library.Funcs;
 
 import AST.Values.Value;
 

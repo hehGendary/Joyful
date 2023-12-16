@@ -1,12 +1,12 @@
 package AST.Statements;
 
-import AST.Expressions.Expression;
+import AST.Expressions.AbstractExpression;
 import Visitors.Visitor;
 
-public class PrintStatement implements Statement {
-    public Expression expr;
+public class PrintStatement implements AbstractStatement {
+    public AbstractExpression expr;
 
-    public PrintStatement(Expression expr) {
+    public PrintStatement(AbstractExpression expr) {
         this.expr = expr;
     }
 

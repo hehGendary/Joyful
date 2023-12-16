@@ -1,15 +1,15 @@
 package AST.Statements;
 
-import AST.Expressions.Expression;
+import AST.Expressions.AbstractExpression;
 import AST.Values.Value;
 import Visitors.Visitor;
 
-public final class ReturnStatement extends RuntimeException implements Statement {
+public final class ReturnStatement extends RuntimeException implements AbstractStatement {
 
-    public final Expression expression;
+    public final AbstractExpression expression;
     private Value result;
 
-    public ReturnStatement(Expression expression) {
+    public ReturnStatement(AbstractExpression expression) {
         this.expression = expression;
     }
 

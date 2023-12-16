@@ -6,11 +6,11 @@ import Visitors.Visitor;
 
 import java.util.List;
 
-public final class ArrayExpression implements Expression {
+public final class ArrayExpression implements AbstractExpression {
 
-    private final List<Expression> elements;
+    private final List<AbstractExpression> elements;
 
-    public ArrayExpression(List<Expression> arguments) {
+    public ArrayExpression(List<AbstractExpression> arguments) {
         this.elements = arguments;
     }
 

@@ -1,16 +1,17 @@
 package AST.Expressions;
 
-import AST.Library.Variables;
+import AST.Library.Variables.Variables;
 import AST.Values.ArrayValue;
 import AST.Values.Value;
 import Visitors.Visitor;
 
-public final class ArrayAccessExpression implements Expression {
+public final class ArrayAccessExpression implements AbstractExpression {
 
     private final String variable;
-    private final Expression index;
+    private final AbstractExpression index;
 
-    public ArrayAccessExpression(String variable, Expression index) {
+
+    public ArrayAccessExpression(String variable, AbstractExpression index) {
         this.variable = variable;
         this.index = index;
     }
@@ -35,4 +36,5 @@ public final class ArrayAccessExpression implements Expression {
     public void accept(Visitor visitor) {
         visitor.visit(this);
     }
+
 }

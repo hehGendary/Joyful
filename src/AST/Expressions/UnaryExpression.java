@@ -4,16 +4,16 @@ import AST.Values.NumberValue;
 import AST.Values.Value;
 import Visitors.Visitor;
 
-public final class UnaryExpression implements Expression {
+public final class UnaryExpression implements AbstractExpression {
 
-    public final Expression expr1;
+    public final AbstractExpression expr1;
     private final char operation;
 
     private double tod(String str) {
         return Double.parseDouble(str.replace(',', '.'));
     }
 
-    public UnaryExpression(char operation, Expression expr1) {
+    public UnaryExpression(char operation, AbstractExpression expr1) {
         this.operation = operation;
         this.expr1 = expr1;
     }

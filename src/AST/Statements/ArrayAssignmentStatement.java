@@ -1,18 +1,18 @@
 package AST.Statements;
 
-import AST.Expressions.Expression;
-import AST.Library.Variables;
+import AST.Expressions.AbstractExpression;
+import AST.Library.Variables.Variables;
 import AST.Values.ArrayValue;
 import AST.Values.Value;
 import Visitors.Visitor;
 
-public final class ArrayAssignmentStatement implements Statement {
+public final class ArrayAssignmentStatement implements AbstractStatement {
 
     private final String variable;
-    private final Expression index;
-    public final Expression expression;
+    private final AbstractExpression index;
+    public final AbstractExpression expression;
 
-    public ArrayAssignmentStatement(String variable, Expression index, Expression expression) {
+    public ArrayAssignmentStatement(String variable, AbstractExpression index, AbstractExpression expression) {
         this.variable = variable;
         this.index = index;
         this.expression = expression;
