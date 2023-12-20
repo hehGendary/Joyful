@@ -22,4 +22,6 @@ public interface Visitor {
     void visit(PrintStatement s);
     void visit(ReturnStatement s);
     void visit(WhileStatement s);
+
+    void visit(ClassDeclarationStatement classDeclarationStatement);
 }

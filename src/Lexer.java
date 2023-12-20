@@ -5,7 +5,7 @@ import java.util.Map;
 
 public final class Lexer {
 
-    private static final String OPERATOR_CHARS = "+-*/%()[]{}=<>!&|,^~?:%";
+    private static final String OPERATOR_CHARS = "+-*/%()[]{}=<>!&|,^~?:%.";
     private static final Map<String, String> OPERATORS;
     static {
         OPERATORS = new HashMap<>();
@@ -31,6 +31,7 @@ public final class Lexer {
         OPERATORS.put("<<", "OPENTREE");
         OPERATORS.put(">>", "CLOSEDTREE");
         OPERATORS.put("<", "<");
+        OPERATORS.put(".", "DOT");
     }
 
     private final String input;
@@ -133,6 +134,7 @@ public final class Lexer {
             case "while": addToken("WHILE"); break;
             case "func": addToken("FUNC"); break;
             case "return": addToken("RETURN"); break;
+            case "class": addToken("CLASS"); break;
             default:
                 addToken("WORD", word);
                 break;

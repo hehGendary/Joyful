@@ -2,7 +2,7 @@ package AST.Expressions;
 
 import AST.Library.Variables.Variables;
 import AST.Values.ArrayValue;
-import AST.Values.AbstractValue;
+import AST.Values.Value;
 import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
@@ -18,8 +18,8 @@ public final class ArrayAccessExpression implements Expression {
     }
 
     @Override
-    public AbstractValue valEval() {
-        final AbstractValue var = Variables.get(variable);
+    public Value valEval() {
+        final Value var = Variables.get(variable);
         if (var instanceof ArrayValue) {
             final ArrayValue array = (ArrayValue) var;
             return array.get((int) index.valEval().asNum());

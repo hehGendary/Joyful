@@ -3,7 +3,7 @@ package AST.Statements;
 import AST.Expressions.Expression;
 import AST.Library.Variables.Variables;
 import AST.Values.NumberValue;
-import AST.Values.AbstractValue;
+import AST.Values.Value;
 import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
@@ -26,7 +26,7 @@ public final class makeVariableStatement implements Statement {
 
     @Override
     public void execute() {
-        final AbstractValue result = expression.valEval();
+        final Value result = expression.valEval();
         if (result != new NumberValue(0)) {
             Variables.set(variable, result);
         }

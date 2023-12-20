@@ -1,9 +1,11 @@
 package AST.Expressions;
 
 import AST.Values.NumberValue;
-import AST.Values.AbstractValue;
+import AST.Values.Value;
 import Visitors.ResultVisitor;
 import Visitors.Visitor;
+
+import java.util.Objects;
 
 public final class BinaryExpression implements Expression {
 
@@ -30,7 +32,7 @@ public final class BinaryExpression implements Expression {
     }
 
     @Override
-    public AbstractValue valEval() {
+    public Value valEval() {
         float first = expr1.valEval().asNum();
         float second = expr2.valEval().asNum();
         switch (operation) {
@@ -41,7 +43,7 @@ public final class BinaryExpression implements Expression {
             case '%': return new NumberValue((double)first % second);
             case '&': return new NumberValue((first == 1 && second == 1) ? 1 : 0);
             case '|': return new NumberValue((first == 1 || second == 1) ? 1 : 0);
-            case '=': return new NumberValue((first == second) ? 1 : 0);
+            case '=': return new NumberValue((Objects.equals(expr1.valEval().asStr(), expr2.valEval().asStr())) ? 1 : 0);
             case '>': return new NumberValue((first > second) ? 1 : 0);
             case '<': return new NumberValue((first < second) ? 1 : 0);
             case '-':

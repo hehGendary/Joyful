@@ -28,7 +28,7 @@ public class Main {
         boolean run = true;
         while (run) {
             List<String> code = new ArrayList<>();
-            System.out.println("Code: (send name of file after send END for end");
+            System.out.println("\nCode: (send name of file after send END for end");
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 String line = scanner.nextLine();

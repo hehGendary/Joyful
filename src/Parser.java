@@ -1,5 +1,6 @@
 import AST.*;
 import AST.Expressions.*;
+import AST.Library.Funcs.Args.Arguments;
 import AST.Statements.*;
 
 import java.util.ArrayList;
@@ -54,10 +55,33 @@ public final class Parser {
         if (match("RETURN")) {
             return new ReturnStatement(getExpr());
         }
+        if (match("CLASS")) {
+            return classDeclaration();
+        }
         if (Objects.equals(get(0).type, "WORD") && Objects.equals(get(1).type, "LPAR")) {
             return new FunctionStatement(function());
         }
         return makeStatement();
+    }
+
+    private Statement classDeclaration() {
+        final String name = get(0).text;
+        consume("WORD");
+        final ClassDeclarationStatement classDeclaration = new ClassDeclarationStatement(name);
+        consume("LBRACE");
+        do {
+            if (match("FUNC")) {
+                classDeclaration.addMethod(functionDefine());
+            } else {
+                final Statement fieldDeclaration = makeStatement();
+                if (fieldDeclaration != null) {
+                    classDeclaration.addField((makeVariableStatement) fieldDeclaration);
+                } else {
+                    throw new JFExpection("", "Class can contain only assignments and function declarations");
+                }
+            }
+        } while (!match("RBRACE"));
+        return classDeclaration;
     }
 
     private Statement whileSt() {
@@ -115,6 +139,29 @@ public final class Parser {
         return new FunctionDefineStatement(name, argNames, body);
     }
 
+    private Arguments arguments() {
+        // (arg1, arg2, arg3 = expr1, arg4 = expr2)
+        final Arguments arguments = new Arguments();
+        boolean startsOptionalArgs = false;
+        consume("LPAR");
+        while (!match("RPAR")) {
+            final String name = get(0).text;
+            consume("WORD");
+            if (match("MAKEEQUALS")) {
+                startsOptionalArgs = true;
+                arguments.addOptional(name, value());
+            } else if (!startsOptionalArgs) {
+                arguments.addRequired(name);
+            } else {
+                throw new JFExpection("", "Required argument cannot be after optional");
+            }
+            if (!match("COMMA")) {
+                consume("RPAR");
+                break;
+            }
+        }
+        return arguments;
+    }
     private FunctionalExpression function() {
         final String name = get(0).text;
         consume("WORD");
@@ -134,10 +181,11 @@ public final class Parser {
         consume("OPENTREE");
         final List<Expression> elements = new ArrayList<>();
         while (!match("CLOSETREE")) {
-            elements.add(getExpr());
-            if (!match("COMMA")) {
-                consume("CLOSEDTREE");
-                break;
+            try {elements.add(getExpr());} catch (JFExpection J) {
+                if (!match("COMMA")) {
+                    consume("CLOSEDTREE");
+                    break;
+                }
             }
         }
         return new ArrayExpression(elements);
@@ -310,8 +358,7 @@ public final class Parser {
     private void consume(String type) {
 
         if (!match(type)) {
-            System.out.println(get(0).toString() + get(1).toString() + get(2).toString());
-            throw new JFExpection("", "");
+            throw new JFExpection("", get(0).toString() + get(1).toString() + get(2).toString());
         }
     }
     private boolean match(String type) {

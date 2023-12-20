@@ -1,10 +1,11 @@
 package AST.Expressions;
 
+import AST.Library.Funcs.Args.Arguments;
 import AST.Library.Funcs.Function;
 import AST.Library.Funcs.Functions;
 import AST.Library.Funcs.UserDefinedFunction;
 import AST.Library.Variables.Variables;
-import AST.Values.AbstractValue;
+import AST.Values.Value;
 import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
@@ -14,28 +15,42 @@ import java.util.List;
 public final class FunctionalExpression implements Expression {
 
     private final String name;
-    public final List<Expression> arguments;
+    public final List<Expression> exprArgs;
+    public Arguments args;
 
     public FunctionalExpression(String name) {
         this.name = name;
-        arguments = new ArrayList<>();
+        exprArgs = new ArrayList<>();
+        args = null;
     }
 
     public FunctionalExpression(String name, List<Expression> arguments) {
         this.name = name;
-        this.arguments = arguments;
+        this.exprArgs = arguments;
+    }
+
+    public FunctionalExpression(String name, Arguments arguments) {
+        this.name = name;
+        args = arguments;
+        exprArgs = null;
     }
 
     public void addArgument(Expression arg) {
-        arguments.add(arg);
+        exprArgs.add(arg);
     }
 
     @Override
-    public AbstractValue valEval() {
-        final int size = arguments.size();
-        final AbstractValue[] values = new AbstractValue[size];
-        for (int i = 0; i < size; i++) {
-            values[i] = arguments.get(i).valEval();
+    public Value valEval() {
+        final int size = exprArgs.size();
+        final Value[] values = new Value[size];
+        if (exprArgs != null) {
+            for (int i = 0; i < size; i++) {
+                values[i] = exprArgs.get(i).valEval();
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                values[i] = args.get(i).getValueExpr().valEval();
+            }
         }
 
         final Function function = Functions.get(name);
@@ -47,7 +62,7 @@ public final class FunctionalExpression implements Expression {
             for (int i = 0; i < size; i++) {
                 Variables.set(userFunction.getArgsName(i), values[i]);
             }
-            final AbstractValue result = userFunction.execute(values);
+            final Value result = userFunction.execute(values);
             Variables.pop();
             return result;
         }
@@ -56,7 +71,7 @@ public final class FunctionalExpression implements Expression {
 
     @Override
     public String eval() {
-        return name + "(" + arguments.toString() + ")";
+        return name + "(" + exprArgs.toString() + ")";
     }
 
     @Override

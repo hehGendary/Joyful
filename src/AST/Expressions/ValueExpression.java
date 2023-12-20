@@ -2,13 +2,13 @@ package AST.Expressions;
 
 import AST.Values.NumberValue;
 import AST.Values.StringValue;
-import AST.Values.AbstractValue;
+import AST.Values.Value;
 import Visitors.ResultVisitor;
 import Visitors.Visitor;
 
 public final class ValueExpression implements Expression {
 
-    public final AbstractValue value;
+    public final Value value;
 
     public ValueExpression(double value) {
         this.value = new NumberValue(value);
@@ -18,7 +18,7 @@ public final class ValueExpression implements Expression {
         this.value = new StringValue(value);
     }
 
-    public ValueExpression(AbstractValue value) {
+    public ValueExpression(Value value) {
         this.value = value;
     }
 
@@ -27,7 +27,7 @@ public final class ValueExpression implements Expression {
         return value.asStr();
     }
 
-    public AbstractValue valEval() {
+    public Value valEval() {
         return value;
     }
 

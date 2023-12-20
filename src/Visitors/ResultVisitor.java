@@ -16,6 +16,7 @@ public interface ResultVisitor<R, T> {
     R visit(FunctionDefineStatement s, T t);
     R visit(FunctionalExpression s, T t);
     R visit(ifElseStatement s, T t);
+    R visit(ClassDeclarationStatement s, T t);
     R visit(FunctionStatement s, T t);
     R visit(PrintStatement s, T t);
     R visit(ReturnStatement s, T t);
