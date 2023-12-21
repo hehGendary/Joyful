@@ -10,4 +10,9 @@ public class FunctionAdder extends AbstractVisitor {
         s.execute();
     }
 
+    @Override
+    public void visit(ArrayAccessExpression arrayAccessExpression) {
+
+    }
+
 }

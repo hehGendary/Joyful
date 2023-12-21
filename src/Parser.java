@@ -16,8 +16,17 @@ public final class Parser {
 
     private int pos;
 
+    private boolean debug;
+
     public Parser(List<Token> tokens) {
         this.tokens = tokens;
+        debug = false;
+        size = tokens.size();
+    }
+
+    public Parser(List<Token> tokens, boolean d) {
+        this.tokens = tokens;
+        debug = d;
         size = tokens.size();
     }
 
@@ -49,6 +58,9 @@ public final class Parser {
         if (match("WHILE")) {
             return whileSt();
         }
+        if (match("USE")) {
+            return use();
+        }
         if (match("FUNC")) {
             return functionDefine();
         }
@@ -62,6 +74,12 @@ public final class Parser {
             return new FunctionStatement(function());
         }
         return makeStatement();
+    }
+
+    private Statement use() {
+        if (match("CANVAS")) return new UseStatement("canvas");
+        throw new JFExpection("", "");
+
     }
 
     private Statement classDeclaration() {
@@ -358,6 +376,9 @@ public final class Parser {
     private void consume(String type) {
 
         if (!match(type)) {
+            if (debug) System.out.println(
+                    get(0).toString() + get(1).toString() + get(2).toString()
+            );
             throw new JFExpection("", get(0).toString() + get(1).toString() + get(2).toString());
         }
     }

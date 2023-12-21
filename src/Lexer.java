@@ -135,6 +135,8 @@ public final class Lexer {
             case "func": addToken("FUNC"); break;
             case "return": addToken("RETURN"); break;
             case "class": addToken("CLASS"); break;
+            case "use": addToken("USE"); break;
+            case "canvas": addToken("CANVAS"); break;
             default:
                 addToken("WORD", word);
                 break;

@@ -4,7 +4,7 @@ import AST.Expressions.*;
 import AST.Statements.*;
 
 public interface Visitor {
-    void visit(ArrayAccessExpression s);
+    void visit(UseStatement s);
     void visit(ArrayExpression s);
     void visit(BinaryExpression s);
     void visit(FunctionalExpression s);
@@ -24,4 +24,6 @@ public interface Visitor {
     void visit(WhileStatement s);
 
     void visit(ClassDeclarationStatement classDeclarationStatement);
+
+    void visit(ArrayAccessExpression arrayAccessExpression);
 }

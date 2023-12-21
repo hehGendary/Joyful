@@ -4,7 +4,7 @@ import AST.Expressions.*;
 import AST.Statements.*;
 
 public abstract class AbstractVisitor implements Visitor {
-    public void visit(ArrayAccessExpression s) {
+    public void visit(UseStatement s) {
 
     }
     public void visit(ArrayExpression s) {

@@ -24,4 +24,6 @@ public interface ResultVisitor<R, T> {
     R visit(ValueExpression s, T t);
     R visit(VariableExpression s, T t);
     R visit(WhileStatement s, T t);
+
+    R visit(UseStatement useStatemnet, T input);
 }

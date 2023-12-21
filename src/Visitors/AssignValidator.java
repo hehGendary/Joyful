@@ -9,4 +9,9 @@ public class AssignValidator extends AbstractVisitor {
     public void visit(makeVariableStatement s) {
         super.visit(s);
     }
+
+    @Override
+    public void visit(ArrayAccessExpression arrayAccessExpression) {
+
+    }
 }

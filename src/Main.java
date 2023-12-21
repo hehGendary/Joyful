@@ -55,7 +55,7 @@ public class Main {
             }
 
             List<Token> tokens = new Lexer(input).tokenize();
-            Statement program = new Parser(tokens).parse();
+            Statement program = new Parser(tokens, true).parse();
 
             program = Optimizer.optimize(program, 20, false);
 

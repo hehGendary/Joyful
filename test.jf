@@ -1,22 +1,42 @@
-func add(arr, number) {
-    oldlen = arrlen(arr)
-    newarray = array(oldlen + 1)
-    for (i = 0, i < oldlen, i = i + 1) {
-        newarray[i] = arr[i]
-    }
-    newarray[oldlen] = number
-    return newarray
+use canvas
+
+msg = ""
+NUM_POINTS = 0
+while (NUM_POINTS < 2 | NUM_POINTS > 25 | NUM_POINTS == 2) {
+  NUM_POINTS = stringToNum(input("Сколькиугольник? (3..25)"))
+}
+angle = 2*pi / NUM_POINTS;
+DIVIDER = 2.8
+
+
+w = 800 h = 600
+window("Fractal polygon demo", w, h)
+fractal(w/2, h/2, w/2)
+repaint()
+
+func cpoly(cx, cy, size) {
+  ox = cx  oy = cy - size
+  i = 0
+  ang = 0
+  while (i < NUM_POINTS) {
+    ang = ang + angle
+    nx = cx - sin(ang)*size  ny = cy - cos(ang)*size
+    line(ox, oy, nx, ny)
+    ox = nx  oy = ny
+    i = i + 1
+  }
 }
 
-primes = <<2>>
-for (i = 2, i < 10'000, i = i + 1) {
-    primesLen = arrlen(primes)
-    thisIsPrime = true
-    for (j = 0, j < primesLen, j = j + 1) {
-        if (!(i % primes[j])) thisIsPrime = false
+func fractal(cx, cy, size) {
+  if ((size > 3) | (size == 3)) {
+    s2 = size / 2
+    color(0, 0, 255 - size * 255 / w/2)
+    cpoly(cx, cy, size / DIVIDER)
+    fractal(cx, cy - s2, size / DIVIDER)
+    n = 0
+    while (n < NUM_POINTS) {
+      fractal(cx - sin(angle*n)*s2, cy - cos(angle*n)*s2, size / DIVIDER)
+      n = n + 1
     }
-    if (thisIsPrime) {
-        primes = add(primes, i)
-        println(i)
-    }
+  }
 }

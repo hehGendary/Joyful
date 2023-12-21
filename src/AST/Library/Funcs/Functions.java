@@ -3,8 +3,8 @@ import AST.Values.ArrayValue;
 import AST.Values.NumberValue;
 import AST.Values.StringValue;
 import AST.Values.Value;
-
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -59,6 +59,7 @@ public final class Functions {
             if (args.length != 1) throw new RuntimeException("");
             return new StringValue(String.valueOf(args[0].asNum()));
         });
+
 
         functions.put("addStr", (Function) (Value... args) -> {
             return new StringValue(args[0].asStr() + args[1].asStr());
