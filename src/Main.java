@@ -1,8 +1,11 @@
 
-import AST.Statements.Statement;
-import Visitors.AssignValidator;
-import Visitors.FunctionAdder;
-import Visitors.Optimize.Optimizer;
+import MainFiles.AST.Statements.Statement;
+import MainFiles.Lexer;
+import MainFiles.Parser;
+import MainFiles.Token;
+import MainFiles.Visitors.AssignValidator;
+import MainFiles.Visitors.FunctionAdder;
+import MainFiles.Visitors.Optimize.Optimizer;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -13,6 +16,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    static int MAJOR = 1;
+    static int Minor = 0;
+    static int micro = 0;
+    static int nano = 0;
+
+
     public static String open(String filename) throws IOException{
         BufferedReader br = new BufferedReader(new FileReader(filename));
         String line;
@@ -26,6 +35,8 @@ public class Main {
     }
     public static void main(String[] args) throws IOException {
         boolean run = true;
+        System.out.println("Joyful programming language");
+        System.out.println("version: " + MAJOR + "." + Minor + "." + micro + "." + nano);
         while (run) {
             List<String> code = new ArrayList<>();
             System.out.println("\nCode: (send name of file after send END for end");
@@ -54,15 +65,14 @@ public class Main {
                 Files.write(Paths.get(file.toURI()), input.getBytes(), StandardOpenOption.APPEND);
             }
 
-            List<Token> tokens = new Lexer(input).tokenize();
-            Statement program = new Parser(tokens, true).parse();
+            Scanner sc = new Scanner(System.in);
+            System.out.print("debug? y fo yes");
+            String question = sc.nextLine();
+            System.out.println("");
 
-            program = Optimizer.optimize(program, 20, false);
-
-            program.accept(new FunctionAdder());
-            program.accept(new AssignValidator());
-
-            program.execute();
+            Run r = new Run(input);
+            r.run((question == "y"));
         }
     }
+
 }
