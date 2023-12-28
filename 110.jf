@@ -1,1 +1,9 @@
-if (false) print("H!")
+use math
+use convert
+
+for (i = 0, i < 100, i = i + 1) {
+    a = str(random(1, 10))
+    b = ","
+    while (b == ",") b = char(a, random(0, floor(strlen(a))))
+    println(b)
+}

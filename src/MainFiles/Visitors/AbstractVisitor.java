@@ -72,4 +72,10 @@ public abstract class AbstractVisitor implements Visitor {
         s.condition.accept(this);
         s.statement.accept(this);
     }
+
+    @Override
+    public void visit(TryMistakeStatement s) {
+        s.trySt.accept(this);
+        s.misSt.accept(this);
+    }
 }

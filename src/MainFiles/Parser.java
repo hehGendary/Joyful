@@ -86,6 +86,8 @@ public final class Parser {
 
     private Statement use() {
         if (match("CANVAS")) return new UseStatement("canvas");
+        if (match("CONVERT")) return new UseStatement("convert");
+        if (match("MATH")) return new UseStatement("math");
         match(get(0).type);
         return new BlockStatement();
 

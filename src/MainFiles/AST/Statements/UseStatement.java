@@ -14,6 +14,8 @@ public class UseStatement implements Statement {
     public void execute() {
         switch (string) {
             case "canvas": canvas.init();
+            case "convert": convert.init();
+            case "math": math.init();
         }
     }
 
