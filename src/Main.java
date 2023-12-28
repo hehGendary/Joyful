@@ -66,7 +66,7 @@ public class Main {
             }
 
             Scanner sc = new Scanner(System.in);
-            System.out.print("debug? y fo yes");
+            System.out.print("debug? y fo yes: ");
             String question = sc.nextLine();
             System.out.println("");
 

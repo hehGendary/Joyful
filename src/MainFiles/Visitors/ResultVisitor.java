@@ -25,5 +25,6 @@ public interface ResultVisitor<R, T> {
     R visit(VariableExpression s, T t);
     R visit(WhileStatement s, T t);
     R visit(UseStatement s, T t);
+    R visit(TryMistakeStatement s, T t);
 
 }

@@ -17,13 +17,14 @@ public class Run {
 
     public void run(boolean debug) {
         List<Token> tokens = new Lexer(code).tokenize();
-        Statement program = new Parser(tokens, debug).parse();
 
-        program = Optimizer.optimize(program, 20, false);
+            Statement program = new Parser(tokens, debug).parse();
 
-        program.accept(new FunctionAdder());
-        program.accept(new AssignValidator());
+            program = Optimizer.optimize(program, 20, false);
 
-        program.execute();
+            program.accept(new FunctionAdder());
+            program.accept(new AssignValidator());
+
+            program.execute();
     }
 }

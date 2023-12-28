@@ -70,16 +70,25 @@ public final class Parser {
             return classDeclaration();
         }
         if (match("USE")) return use();
+        if (match("TRY")) return trymistake();
         if (Objects.equals(get(0).type, "WORD") && Objects.equals(get(1).type, "LPAR")) {
             return new FunctionStatement(function());
         }
         return makeStatement();
     }
 
+    private Statement trymistake() {
+        Statement trySt = blOrSt();
+        consume("MISTAKE");
+        Statement misSt = blOrSt();
+        return new TryMistakeStatement(trySt, misSt);
+    }
+
     private Statement use() {
         if (match("CANVAS")) return new UseStatement("canvas");
         match(get(0).type);
         return new BlockStatement();
+
     }
 
 

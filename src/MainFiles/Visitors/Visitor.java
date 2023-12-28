@@ -26,4 +26,5 @@ public interface Visitor {
 
     void visit(ArrayAccessExpression arrayAccessExpression);
     void visit(UseStatement s);
+    void visit(TryMistakeStatement s);
 }
