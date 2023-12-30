@@ -1,18 +1,11 @@
 
-import MainFiles.AST.Statements.Statement;
-import MainFiles.Lexer;
-import MainFiles.Parser;
-import MainFiles.Token;
-import MainFiles.Visitors.AssignValidator;
-import MainFiles.Visitors.FunctionAdder;
-import MainFiles.Visitors.Optimize.Optimizer;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -71,7 +64,7 @@ public class Main {
             System.out.println("");
 
             Run r = new Run(input);
-            r.run((question == "y"));
+            r.run((Objects.equals(question, "y")));
         }
     }
 

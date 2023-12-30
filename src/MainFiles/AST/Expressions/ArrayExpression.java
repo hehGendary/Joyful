@@ -5,6 +5,7 @@ import MainFiles.AST.Values.Value;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
 import java.util.List;
 
 public final class ArrayExpression implements Expression {
@@ -16,7 +17,7 @@ public final class ArrayExpression implements Expression {
     }
 
     @Override
-    public Value valEval() {
+    public Value valEval() throws IOException {
         final int size = elements.size();
         final ArrayValue array = new ArrayValue(size);
         for (int i = 0; i < size; i++) {

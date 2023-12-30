@@ -6,6 +6,8 @@ import MainFiles.AST.Values.Value;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
+
 public final class ArrayAccessExpression implements Expression {
 
     private final String variable;
@@ -18,7 +20,7 @@ public final class ArrayAccessExpression implements Expression {
     }
 
     @Override
-    public Value valEval() {
+    public Value valEval() throws IOException {
         final Value var = Variables.get(variable);
         if (var instanceof ArrayValue) {
             final ArrayValue array = (ArrayValue) var;

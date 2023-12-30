@@ -6,6 +6,8 @@ import MainFiles.AST.Values.Value;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
+
 public final class ValueExpression implements Expression {
 
     public final Value value;
@@ -23,8 +25,8 @@ public final class ValueExpression implements Expression {
     }
 
     @Override
-    public String eval() {
-        return value.asStr();
+    public String eval() throws IOException {
+        return null;
     }
 
     public Value valEval() {

@@ -5,6 +5,8 @@ import MainFiles.AST.Values.Value;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
+
 public final class UnaryExpression implements Expression {
 
     public final Expression expr1;
@@ -20,7 +22,7 @@ public final class UnaryExpression implements Expression {
     }
 
     @Override
-    public String eval() {
+    public String eval() throws IOException {
         switch (operation) {
             case '-': return "-" + expr1.eval();
             case '!': return "!" + expr1.eval();
@@ -31,7 +33,7 @@ public final class UnaryExpression implements Expression {
     }
 
     @Override
-    public Value valEval() {
+    public Value valEval() throws IOException {
         switch (operation) {
             case '-': return new NumberValue(tod("-" + expr1.eval()));
             case '!': return new NumberValue(expr1.valEval().asNum() == 0.0

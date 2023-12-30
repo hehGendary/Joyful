@@ -4,6 +4,8 @@ import MainFiles.AST.Expressions.Expression;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
+
 public class PrintStatement implements Statement {
     public Expression expr;
 
@@ -11,7 +13,7 @@ public class PrintStatement implements Statement {
         this.expr = expr;
     }
 
-    public void execute() {
+    public void execute() throws IOException {
         System.out.println(expr.eval());
     }
 

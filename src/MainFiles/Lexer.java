@@ -142,9 +142,11 @@ public final class Lexer {
             case "use": addToken("USE"); break;
             case "try": addToken("TRY"); break;
             case "mistake": addToken("MISTAKE"); break;
+
             case "canvas": addToken("CANVAS"); break;
             case "convert": addToken("CONVERT"); break;
             case "math": addToken("MATH"); break;
+            case "run": addToken("RUN"); break;
             default:
                 addToken("WORD", word);
                 break;

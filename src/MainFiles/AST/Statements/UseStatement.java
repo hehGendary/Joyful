@@ -16,6 +16,7 @@ public class UseStatement implements Statement {
             case "canvas": canvas.init();
             case "convert": convert.init();
             case "math": math.init();
+            case "run": run.init();
         }
     }
 

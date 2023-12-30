@@ -4,6 +4,8 @@ import MainFiles.AST.Statements.Statement;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
+
 public class TryMistakeStatement implements Statement {
 
     public Statement trySt;
@@ -24,7 +26,7 @@ public class TryMistakeStatement implements Statement {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IOException {
         try {
             trySt.execute();
         } catch (Exception e) {

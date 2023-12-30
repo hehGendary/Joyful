@@ -6,6 +6,8 @@ import MainFiles.AST.Values.Value;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
+
 public class VariableExpression implements Expression {
     private String tos(double dou) {
         return String.valueOf(dou);
@@ -17,9 +19,9 @@ public class VariableExpression implements Expression {
         this.name = name;
     }
 
-    public String eval() {
-        if (!Variables.isExists(name)) throw new RuntimeException("Constant does not exists");
-        return tos(Variables.get(name).asDouble());
+    @Override
+    public String eval() throws IOException {
+        return null;
     }
 
     public Value valEval() {

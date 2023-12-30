@@ -4,6 +4,8 @@ import MainFiles.AST.Expressions.FunctionalExpression;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
+
 public final class FunctionStatement implements Statement {
 
     public final FunctionalExpression function;
@@ -13,7 +15,7 @@ public final class FunctionStatement implements Statement {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IOException {
         function.valEval();
     }
 

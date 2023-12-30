@@ -3,6 +3,7 @@ package MainFiles.AST.Statements;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class BlockStatement implements Statement {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IOException {
         for (Statement st : statements) {
             st.execute();
         }

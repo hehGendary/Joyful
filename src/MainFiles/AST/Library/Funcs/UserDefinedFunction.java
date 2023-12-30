@@ -7,6 +7,7 @@ import MainFiles.AST.Statements.Statement;
 import MainFiles.AST.Values.NumberValue;
 import MainFiles.AST.Values.Value;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class UserDefinedFunction implements Function {
     }
 
     @Override
-    public Value execute(Value... args) {
+    public Value execute(Value... args) throws IOException {
         try {
             body.execute();
             return new NumberValue(0);

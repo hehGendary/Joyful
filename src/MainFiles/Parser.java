@@ -88,6 +88,7 @@ public final class Parser {
         if (match("CANVAS")) return new UseStatement("canvas");
         if (match("CONVERT")) return new UseStatement("convert");
         if (match("MATH")) return new UseStatement("math");
+        if (match("RUN")) return new UseStatement("run");
         match(get(0).type);
         return new BlockStatement();
 
@@ -388,9 +389,11 @@ public final class Parser {
     private void consume(String type) {
 
         if (!match(type)) {
-            if (debug) System.out.println(
-                    get(0).toString() + get(1).toString() + get(2).toString()
-            );
+            if (debug) {
+                System.out.println(
+                        get(0).toString() + get(1).toString() + get(2).toString()
+                );
+            }
             throw new JFExpection("", get(0).toString() + get(1).toString() + get(2).toString());
         }
     }

@@ -5,6 +5,8 @@ import MainFiles.AST.Values.Value;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
+
 public final class ReturnStatement extends RuntimeException implements Statement {
 
     public final Expression expression;
@@ -19,7 +21,7 @@ public final class ReturnStatement extends RuntimeException implements Statement
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IOException {
         result = expression.valEval();
         throw this;
     }

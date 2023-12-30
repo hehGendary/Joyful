@@ -5,6 +5,7 @@ import MainFiles.AST.Values.Value;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public final class BinaryExpression implements Expression {
@@ -27,12 +28,12 @@ public final class BinaryExpression implements Expression {
     }
 
     @Override
-    public String eval() {
+    public String eval() throws IOException {
         return tos(valEval().asDouble());
     }
 
     @Override
-    public Value valEval() {
+    public Value valEval() throws IOException {
         float first = expr1.valEval().asNum();
         float second = expr2.valEval().asNum();
         switch (operation) {

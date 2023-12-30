@@ -7,6 +7,8 @@ import MainFiles.AST.Values.Value;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
+
 public final class makeVariableStatement implements Statement {
 
     private double tod(String str) {
@@ -25,7 +27,7 @@ public final class makeVariableStatement implements Statement {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IOException {
         final Value result = expression.valEval();
         if (result != new NumberValue(0)) {
             Variables.set(variable, result);

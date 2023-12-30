@@ -9,6 +9,7 @@ import MainFiles.AST.Values.Value;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,12 @@ public final class FunctionalExpression implements Expression {
     }
 
     @Override
-    public Value valEval() {
+    public String eval() throws IOException {
+        return null;
+    }
+
+    @Override
+    public Value valEval() throws IOException {
         final int size = exprArgs.size();
         final Value[] values = new Value[size];
         if (exprArgs != null) {
@@ -68,9 +74,8 @@ public final class FunctionalExpression implements Expression {
         }
         return function.execute(values);
     }
-
     @Override
-    public String eval() {
+    public String toString() {
         return name + "(" + exprArgs.toString() + ")";
     }
 

@@ -5,6 +5,8 @@ import MainFiles.AST.Values.Value;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
+
 public final class TripleExpression implements Expression {
 
     public final Expression expr1, expr2, expr3;
@@ -26,12 +28,7 @@ public final class TripleExpression implements Expression {
     }
 
     @Override
-    public String eval() {
-        return tos(valEval().asDouble());
-    }
-
-    @Override
-    public Value valEval() {
+    public Value valEval() throws IOException {
         float first = expr1.valEval().asNum();
         float second = expr2.valEval().asNum();
         float third = expr3.valEval().asNum();
@@ -43,6 +40,11 @@ public final class TripleExpression implements Expression {
     @Override
     public String toString() {
         return String.format("%s %c %s", expr1, operation, expr2);
+    }
+
+    @Override
+    public String eval() throws IOException {
+        return null;
     }
 
     @Override

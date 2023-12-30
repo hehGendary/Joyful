@@ -7,6 +7,8 @@ import MainFiles.AST.Values.Value;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
+
 public final class ArrayAssignmentStatement implements Statement {
 
     private final String variable;
@@ -20,7 +22,7 @@ public final class ArrayAssignmentStatement implements Statement {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IOException {
         final Value var = Variables.get(variable);
         if (var instanceof ArrayValue array) {
             array.set((int) index.valEval().asNum(), expression.valEval());

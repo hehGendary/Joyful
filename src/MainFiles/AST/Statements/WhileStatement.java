@@ -3,6 +3,8 @@ import MainFiles.AST.Expressions.Expression;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
+import java.io.IOException;
+
 public final class WhileStatement implements Statement {
 
     public final Expression condition;
@@ -14,7 +16,7 @@ public final class WhileStatement implements Statement {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IOException {
         while (condition.valEval().asNum() != 0) {
             statement.execute();
         }
