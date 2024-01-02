@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Main {
     static int MAJOR = 1;
     static int Minor = 2;
-    static int micro = 0;
+    static int micro = 1;
     static int nano = 0;
 
 

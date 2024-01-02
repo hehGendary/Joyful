@@ -1,16 +1,21 @@
-package MainFiles.AST.Library.Funcs.Modules;
+package MainFiles.AST.Library.Funcs.Modules.Basic;
 
 import MainFiles.AST.JFExpection;
 import MainFiles.AST.Library.Funcs.Function;
 import MainFiles.AST.Library.Funcs.Functions;
+import MainFiles.AST.Library.Funcs.Modules.Module;
+import MainFiles.AST.Library.Variables.Variables;
 import MainFiles.AST.Values.ArrayValue;
 import MainFiles.AST.Values.NumberValue;
 import MainFiles.AST.Values.StringValue;
 import MainFiles.AST.Values.Value;
 
 public final class convert implements Module {
+    private static Value asval(float a) {return new NumberValue(0);}
     public static void initConstants() {
-
+        Variables.define("num_type", asval(1));
+        Variables.define("str_type", asval(2));
+        Variables.define("arr_type", asval(3));
     }
 
     public static void init() {

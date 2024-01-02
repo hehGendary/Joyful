@@ -1,8 +1,12 @@
 package MainFiles.AST.Statements;
 
+import MainFiles.AST.Library.Funcs.Modules.Basic.convert;
+import MainFiles.AST.Library.Funcs.Modules.Basic.math;
+import MainFiles.AST.Library.Funcs.Modules.canvas;
+import MainFiles.AST.Library.Funcs.Modules.run;
+import MainFiles.AST.Library.Funcs.Modules.strings;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
-import MainFiles.AST.Library.Funcs.Modules.*;
 
 public class UseStatement implements Statement {
     public String string;
@@ -14,8 +18,10 @@ public class UseStatement implements Statement {
     public void execute() {
         switch (string) {
             case "canvas": canvas.init();
-            case "convert": convert.init();
+            case "convert":
+                convert.init();
             case "math": math.init();
+            case "strings": strings.init();
             case "run": run.init();
         }
     }

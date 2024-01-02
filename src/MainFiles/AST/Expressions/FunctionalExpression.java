@@ -66,7 +66,7 @@ public final class FunctionalExpression implements Expression {
 
             Variables.push();
             for (int i = 0; i < size; i++) {
-                Variables.set(userFunction.getArgsName(i), values[i]);
+                Variables.define(userFunction.getArgsName(i), values[i]);
             }
             final Value result = userFunction.execute(values);
             Variables.pop();

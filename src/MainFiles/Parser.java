@@ -89,6 +89,7 @@ public final class Parser {
         if (match("CONVERT")) return new UseStatement("convert");
         if (match("MATH")) return new UseStatement("math");
         if (match("RUN")) return new UseStatement("run");
+        if (match("STRINGS")) return new UseStatement("strings");
         match(get(0).type);
         return new BlockStatement();
 

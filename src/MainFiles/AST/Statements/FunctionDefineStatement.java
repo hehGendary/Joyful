@@ -21,7 +21,7 @@ public final class FunctionDefineStatement implements Statement {
 
     @Override
     public void execute() {
-        Functions.set(name, new UserDefinedFunction(argNames, body));
+        Functions.define(name, new UserDefinedFunction(argNames, body));
     }
 
     @Override

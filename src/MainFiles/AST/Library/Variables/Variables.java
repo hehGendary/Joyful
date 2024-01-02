@@ -44,6 +44,9 @@ public final class Variables {
         return variables.get(key);
     }
 
+    public static void define(String key, Value value) {
+        variables.put(key, value);
+    }
     public static void set(String key, Value value) {
         variables.put(key, value);
     }

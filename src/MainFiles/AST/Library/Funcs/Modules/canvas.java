@@ -31,27 +31,27 @@ public final class canvas implements Module {
 
     public static void initConstants() {
 
-        Variables.set("UP", new NumberValue(KeyEvent.VK_UP));
-        Variables.set("DOWN", new NumberValue(KeyEvent.VK_DOWN));
-        Variables.set("LEFT", new NumberValue(KeyEvent.VK_LEFT));
-        Variables.set("RIGHT", new NumberValue(KeyEvent.VK_RIGHT));
-        Variables.set("FIRE", new NumberValue(KeyEvent.VK_ENTER));
-        Variables.set("ESCAPE", new NumberValue(KeyEvent.VK_ESCAPE));
+        Variables.define("UP", new NumberValue(KeyEvent.VK_UP));
+        Variables.define("DOWN", new NumberValue(KeyEvent.VK_DOWN));
+        Variables.define("LEFT", new NumberValue(KeyEvent.VK_LEFT));
+        Variables.define("RIGHT", new NumberValue(KeyEvent.VK_RIGHT));
+        Variables.define("FIRE", new NumberValue(KeyEvent.VK_ENTER));
+        Variables.define("ESCAPE", new NumberValue(KeyEvent.VK_ESCAPE));
     }
     public static void init() {
-        Functions.set("window", new CreateWindow());
-        Functions.set("prompt", new Prompt());
-        Functions.set("keypressed", new KeyPressed());
-        Functions.set("mousehover", new MouseHover());
-        Functions.set("line", intConsumer4Convert(canvas::line));
-        Functions.set("oval", intConsumer4Convert(canvas::oval));
-        Functions.set("foval", intConsumer4Convert(canvas::foval));
-        Functions.set("rect", intConsumer4Convert(canvas::rect));
-        Functions.set("frect", intConsumer4Convert(canvas::frect));
-        Functions.set("clip", intConsumer4Convert(canvas::clip));
-        Functions.set("drawstring", new DrawString());
-        Functions.set("color", new SetColor());
-        Functions.set("repaint", new Repaint());
+        Functions.define("window", new CreateWindow());
+        Functions.define("prompt", new Prompt());
+        Functions.define("keypressed", new KeyPressed());
+        Functions.define("mousehover", new MouseHover());
+        Functions.define("line", intConsumer4Convert(canvas::line));
+        Functions.define("oval", intConsumer4Convert(canvas::oval));
+        Functions.define("foval", intConsumer4Convert(canvas::foval));
+        Functions.define("rect", intConsumer4Convert(canvas::rect));
+        Functions.define("frect", intConsumer4Convert(canvas::frect));
+        Functions.define("clip", intConsumer4Convert(canvas::clip));
+        Functions.define("drawstring", new DrawString());
+        Functions.define("color", new SetColor());
+        Functions.define("repaint", new Repaint());
 
         initConstants();
 

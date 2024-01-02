@@ -30,7 +30,7 @@ public final class makeVariableStatement implements Statement {
     public void execute() throws IOException {
         final Value result = expression.valEval();
         if (result != new NumberValue(0)) {
-            Variables.set(variable, result);
+            Variables.define(variable, result);
         }
     }
 

@@ -122,6 +122,10 @@ public final class Functions {
         return functions.get(key);
     }
 
+    public static void define(String key, Function function) {
+        functions.put(key, function);
+    }
+
     public static void set(String key, Function function) {
         functions.put(key, function);
     }

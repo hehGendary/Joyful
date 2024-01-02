@@ -138,7 +138,6 @@ public final class Lexer {
             case "while": addToken("WHILE"); break;
             case "func": addToken("FUNC"); break;
             case "return": addToken("RETURN"); break;
-            case "class": addToken("CLASS"); break;
             case "use": addToken("USE"); break;
             case "try": addToken("TRY"); break;
             case "mistake": addToken("MISTAKE"); break;
@@ -147,6 +146,7 @@ public final class Lexer {
             case "convert": addToken("CONVERT"); break;
             case "math": addToken("MATH"); break;
             case "run": addToken("RUN"); break;
+            case "strings": addToken("STRINGS"); break;
             default:
                 addToken("WORD", word);
                 break;
@@ -154,7 +154,8 @@ public final class Lexer {
     }
 
     private void tokenizeText() {
-        next();// skip "
+        boolean isDouble = peek(0) == '"';
+        next();// skip " or '
         final StringBuilder buffer = new StringBuilder();
         char current = peek(0);
         while (true) {
@@ -169,11 +170,12 @@ public final class Lexer {
                 buffer.append('\\');
                 continue;
             }
-            if (current == '"') break;
+            if (current == '"' && isDouble) break;
+            if (current == '\'' && (!isDouble)) break;
             buffer.append(current);
             current = next();
         }
-        next(); // skip closing "
+        next(); // skip closing " or '
 
         addToken("STRING", buffer.toString());
     }

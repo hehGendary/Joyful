@@ -1,6 +1,7 @@
-package MainFiles.AST.Library.Funcs.Modules;
+package MainFiles.AST.Library.Funcs.Modules.Basic;
 
 import MainFiles.AST.Library.Funcs.Functions;
+import MainFiles.AST.Library.Funcs.Modules.Module;
 import MainFiles.AST.Library.Variables.Variables;
 import MainFiles.AST.Values.*;
 
