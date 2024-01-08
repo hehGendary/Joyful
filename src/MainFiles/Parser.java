@@ -3,8 +3,10 @@ package MainFiles;
 import MainFiles.AST.Expressions.*;
 import MainFiles.AST.JFExpection;
 import MainFiles.AST.Library.Funcs.Args.Arguments;
+import MainFiles.AST.Library.Variables.Variables;
 import MainFiles.AST.Statements.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,12 +15,15 @@ public final class Parser {
 
     private static final Token EOF = new Token("EOF");
 
+    boolean isMorj = false;
+
     private final List<Token> tokens;
     private final int size;
 
     private int pos;
 
     private boolean debug;
+    private boolean isNewArrayWritingMethod = false;
 
     public Parser(List<Token> tokens) {
         this.tokens = tokens;
@@ -210,17 +215,19 @@ public final class Parser {
     }
 
     private Expression array() {
-        consume("OPENTREE");
-        final List<Expression> elements = new ArrayList<>();
-        while (!match("CLOSETREE")) {
-            try {elements.add(getExpr());} catch (JFExpection J) {
-                if (!match("COMMA")) {
-                    consume("CLOSEDTREE");
-                    break;
+            consume("OPENTREE");
+            final List<Expression> elements = new ArrayList<>();
+            while (!match("CLOSETREE")) {
+                try {
+                    elements.add(getExpr());
+                } catch (JFExpection J) {
+                    if (!match("COMMA")) {
+                        consume("CLOSEDTREE");
+                        break;
+                    }
                 }
             }
-        }
-        return new ArrayExpression(elements);
+            return new ArrayExpression(elements);
     }
 
     private Expression element() {
@@ -259,7 +266,21 @@ public final class Parser {
         return new ifElseStatement(cond, ifSt, elseSt);
     }
     private Expression getExpr() {
-        return OrExpr();
+        return morjExpr();
+    }
+
+    private Expression morjExpr() {
+        Expression result = OrExpr();
+
+        if (match("MORJ")) {
+            try {
+                result = new MorjExpression(result.valEval().asStr(), OrExpr());
+            } catch (IOException e) {
+                // err
+            }
+        }
+
+        return result;
     }
 
     private Expression OrExpr() {
@@ -381,6 +402,9 @@ public final class Parser {
             return function();
         }
         if (match("WORD"))  {
+            if (!Variables.isExists(current.text) && Objects.equals(get(1).type, "MORJ")) {
+                return new ValueExpression(current.text);
+            }
             return new VariableExpression(current.text);
         }
         consume("WORD");

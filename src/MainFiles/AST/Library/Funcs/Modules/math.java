@@ -1,4 +1,4 @@
-package MainFiles.AST.Library.Funcs.Modules.Basic;
+package MainFiles.AST.Library.Funcs.Modules;
 
 import MainFiles.AST.Library.Funcs.Functions;
 import MainFiles.AST.Library.Funcs.Modules.Module;

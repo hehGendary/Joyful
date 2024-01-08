@@ -1,6 +1,7 @@
 package MainFiles.Visitors;
 
 import MainFiles.AST.Expressions.*;
+import MainFiles.AST.Library.Nodes.Node;
 import MainFiles.AST.Statements.*;
 
 public interface ResultVisitor<R, T> {
@@ -27,4 +28,6 @@ public interface ResultVisitor<R, T> {
     R visit(UseStatement s, T t);
     R visit(TryMistakeStatement s, T t);
 
+    R visit(MorjExpression s, T t);
+    R visit(Node s, T t);
 }

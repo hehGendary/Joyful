@@ -43,6 +43,15 @@ public final class canvas implements Module {
         Functions.define("prompt", new Prompt());
         Functions.define("keypressed", new KeyPressed());
         Functions.define("mousehover", new MouseHover());
+        Functions.define("sleep", (Value... args) -> {
+            try {
+                Thread.sleep((long) args[0].asNum());
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return new NumberValue(0);
+        });
+
         Functions.define("line", intConsumer4Convert(canvas::line));
         Functions.define("oval", intConsumer4Convert(canvas::oval));
         Functions.define("foval", intConsumer4Convert(canvas::foval));
@@ -55,7 +64,7 @@ public final class canvas implements Module {
 
         initConstants();
 
-        lastKey = MINUS_ONE;
+        lastKey = new NumberValue(-1);
         mouseHover = new ArrayValue(new Value[] { new NumberValue(0), new NumberValue(0)});
     }
 
@@ -116,7 +125,7 @@ public final class canvas implements Module {
                 }
                 @Override
                 public void keyReleased(KeyEvent e) {
-                    lastKey = MINUS_ONE;
+                    lastKey = new NumberValue(-1);
                 }
             });
             addMouseMotionListener(new MouseMotionAdapter() {

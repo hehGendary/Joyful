@@ -1,6 +1,5 @@
 package MainFiles.AST.Statements;
 
-import MainFiles.AST.Library.Classes.ClassDeclarations;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 
@@ -29,7 +28,7 @@ public final class ClassDeclarationStatement implements Statement {
 
     @Override
     public void execute() {
-        ClassDeclarations.set(name, this);
+        //ClassDeclarations.set(name, this);
     }
 
     @Override

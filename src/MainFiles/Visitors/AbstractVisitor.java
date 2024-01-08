@@ -78,4 +78,8 @@ public abstract class AbstractVisitor implements Visitor {
         s.trySt.accept(this);
         s.misSt.accept(this);
     }
+
+    public void visit(MorjExpression s) {
+        
+    }
 }

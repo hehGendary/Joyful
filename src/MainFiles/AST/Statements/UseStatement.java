@@ -1,10 +1,7 @@
 package MainFiles.AST.Statements;
 
-import MainFiles.AST.Library.Funcs.Modules.Basic.convert;
-import MainFiles.AST.Library.Funcs.Modules.Basic.math;
-import MainFiles.AST.Library.Funcs.Modules.canvas;
-import MainFiles.AST.Library.Funcs.Modules.run;
-import MainFiles.AST.Library.Funcs.Modules.strings;
+
+import MainFiles.AST.Library.Funcs.Modules.*;
 import MainFiles.Visitors.ResultVisitor;
 import MainFiles.Visitors.Visitor;
 

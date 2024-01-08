@@ -1,6 +1,7 @@
 package MainFiles.Visitors;
 
 import MainFiles.AST.Expressions.*;
+import MainFiles.AST.Library.Nodes.Node;
 import MainFiles.AST.Statements.*;
 
 public interface Visitor {
@@ -27,4 +28,7 @@ public interface Visitor {
     void visit(ArrayAccessExpression arrayAccessExpression);
     void visit(UseStatement s);
     void visit(TryMistakeStatement s);
+    void visit(MorjExpression s);
+
+    void visit(Node s);
 }

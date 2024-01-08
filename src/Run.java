@@ -5,11 +5,8 @@ import MainFiles.Token;
 import MainFiles.Visitors.AssignValidator;
 import MainFiles.Visitors.FunctionAdder;
 import MainFiles.Visitors.Optimize.Optimizer;
-import MainFiles.Visitors.UseExecute;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 public class Run {
@@ -26,7 +23,6 @@ public class Run {
 
             program = Optimizer.optimize(program, 20, false);
 
-            program.accept(new UseExecute());
             program.accept(new FunctionAdder());
             program.accept(new AssignValidator());
 

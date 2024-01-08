@@ -32,6 +32,7 @@ public final class Lexer {
         OPERATORS.put(",", "COMMA");
         OPERATORS.put(";", "SEMICOLON");
         OPERATORS.put(">", ">");
+        OPERATORS.put(":>", "MORJ");
         OPERATORS.put("<<", "OPENTREE");
         OPERATORS.put(">>", "CLOSEDTREE");
         OPERATORS.put("<", "<");
